@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset='utf-8' />
-<title>Moscow Transport Map</title>
+<title>Display a map</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet' />
@@ -20,10 +20,16 @@ var map = new mapboxgl.Map({
 container: 'map', // container id
 style: 'mapbox://styles/yanpogutsa/cjyew8t4u0v101cp9wknt7okd', // stylesheet location
 center: [37.622232, 55.743661], // starting position [lng, lat]
-zoom: 11 // starting zoom
+zoom: 9.5 // starting zoom
 });
- 
- map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ru']);
+
+map.on('load', function() {
+map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('settlement-subdivision-label', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_ru']);
+});
+
 </script>
  
 </body>
