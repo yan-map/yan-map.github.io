@@ -18,7 +18,7 @@ body { margin:0; padding:0; }
 mapboxgl.accessToken = 'pk.eyJ1IjoieWFucG9ndXRzYSIsImEiOiJjajBhMzJydzIwZmtmMndvY3ozejFicTdqIn0.T6DCFk1BSoEkdG-2agIoQQ';
 var map = new mapboxgl.Map({
 container: 'map', // container id
-style: 'mapbox://styles/yanpogutsa/cjyew8t4u0v101cp9wknt7okd', // stylesheet location
+style: 'mapbox://styles/yanpogutsa/cjyqab6780ofb1cn4ge5sfqmw', // stylesheet location
 center: [37.622232, 55.743661], // starting position [lng, lat]
 zoom: 9.5 // starting zoom
 });
@@ -28,6 +28,14 @@ map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ru']);
 map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_ru']);
 map.setLayoutProperty('settlement-subdivision-label', 'text-field', ['get', 'name_ru']);
 map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('road-primary', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('road-secondary-tertiary', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('road-motorway-trunk', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('road-street', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('road-minor', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('road-pedestrian', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('road-path', 'text-field', ['get', 'name_ru']);
+map.setLayoutProperty('road-construction', 'text-field', ['get', 'name_ru']);
 });
 
 </script>
