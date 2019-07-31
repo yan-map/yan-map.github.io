@@ -43,7 +43,7 @@ map.setLayoutProperty('road-construction', 'text-field', ['get', 'name_ru']);
 map.on('click', 'MCD-stations', function (e) {
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML('<h1>Hello World!</h1>'e.features[0].properties.Pass2018)
+.setHTML(e.features[0].properties.Pass2018)
 .addTo(map);
 });
 
