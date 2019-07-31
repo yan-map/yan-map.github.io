@@ -38,6 +38,27 @@ map.setLayoutProperty('road-path', 'text-field', ['get', 'name_ru']);
 map.setLayoutProperty('road-construction', 'text-field', ['get', 'name_ru']);
 });
 
+// When a click event occurs on a feature in the states layer, open a popup at the
+// location of the click, with description HTML from its properties.
+map.on('click', 'MCD-stations', function (e) {
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(e.features[0].properties.Pass2018)
+.addTo(map);
+});
+ 
+// Change the cursor to a pointer when the mouse is over the states layer.
+map.on('mouseenter', 'MCD-stations', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'MCD-stationsr', function () {
+map.getCanvas().style.cursor = '';
+});
+});
+
+
 </script>
  
 </body>
