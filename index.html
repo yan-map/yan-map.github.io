@@ -43,7 +43,7 @@ map.setLayoutProperty('road-construction', 'text-field', ['get', 'name_ru']);
 map.on('click', 'MCD-stations', function (e) {
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML('<h3>'+e.features[0].properties.Pass2018+'</h3>'+'<p>Пасспоток 2018: ' + e.features[0].properties.Pass2018 + '</p>Пасспоток 2020: ' + e.features[0].properties.Pass2020 + '</p>'+ '</p>Пасспоток 2025: ' + e.features[0].properties.Pass2025 + '</p>')
+.setHTML('<h3>'+e.features[0].properties.name+'</h3>'+'<p>Пасспоток 2018: ' + e.features[0].properties.Pass2018 + '</p>Пасспоток 2020: ' + e.features[0].properties.Pass2020 + '</p>'+ '</p>Пасспоток 2025: ' + e.features[0].properties.Pass2025 + '</p>')
 .addTo(map);
 });
 
