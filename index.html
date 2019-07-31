@@ -48,12 +48,12 @@ new mapboxgl.Popup()
 });
 
 // Change the cursor to a pointer when the mouse is over the places layer.
-map.on('mouseenter', 'places', function () {
+map.on('mouseenter', 'MCD-stations', function () {
 map.getCanvas().style.cursor = 'pointer';
 });
  
 // Change it back to a pointer when it leaves.
-map.on('mouseleave', 'places', function () {
+map.on('mouseleave', 'MCD-stations', function () {
 map.getCanvas().style.cursor = '';
 });
 
