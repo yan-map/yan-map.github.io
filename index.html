@@ -43,10 +43,19 @@ map.setLayoutProperty('road-construction', 'text-field', ['get', 'name_ru']);
 map.on('click', 'MCD-stations', function (e) {
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML(e.features[0].properties.Pass2018)
+.setHTML('<h1>Hello World!</h1>'e.features[0].properties.Pass2018)
 .addTo(map);
 });
 
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'places', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'places', function () {
+map.getCanvas().style.cursor = '';
+});
 
 </script>
  
