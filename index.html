@@ -134,6 +134,11 @@ map.setFilter("ngpt-highlighted", filter);
 map.setFilter("text-highlighted", filter)
 });
 
+map.on('click', "ngpt-highlighted", function(e) {
+// set bbox as 5px reactangle area around clicked point
+map.setFilter("ngpt-highlighted", ["in", "id", ""]);
+map.setFilter("text-highlighted", ["in", "id", ""])
+});
 
 });
 
