@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta charset='utf-8' />
-<title>Карта Яна</title>
+<title>Select features around a clicked point</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css' rel='stylesheet' />
 <style>
 body { margin:0; padding:0; }
 #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -14,39 +14,145 @@ body { margin:0; padding:0; }
 <body>
  
 <div id='map'></div>
+ 
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoieWFucG9ndXRzYSIsImEiOiJjajBhMzJydzIwZmtmMndvY3ozejFicTdqIn0.T6DCFk1BSoEkdG-2agIoQQ';
 var map = new mapboxgl.Map({
-container: 'map', // container id
-style: 'mapbox://styles/yanpogutsa/cjyew8t4u0v101cp9wknt7okd', // stylesheet location
-center: [37.622232, 55.743661], // starting position [lng, lat]
-zoom: 9.5 // starting zoom
+container: 'map',
+style: 'mapbox://styles/yanpogutsa/cjyew8t4u0v101cp9wknt7okd',
+center: [37.622232, 55.7436618],
+minZoom: 2,
+zoom: 10
 });
-
+ 
 map.on('load', function() {
-map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('settlement-subdivision-label', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('road-primary', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('road-secondary-tertiary', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('road-motorway-trunk', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('road-street', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('road-minor', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('road-pedestrian', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('road-path', 'text-field', ['get', 'name_ru']);
-map.setLayoutProperty('road-construction', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('settlement-subdivision-label', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('road-primary', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('road-secondary-tertiary', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('road-motorway-trunk', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('road-street', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('road-minor', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('road-pedestrian', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('road-path', 'text-field', ['get', 'name_ru']);
+//map.setLayoutProperty('road-construction', 'text-field', ['get', 'name_ru']);
+
+map.addLayer({
+"id": "ngpt",
+"type": "line",
+"source": {
+type: 'vector',
+url: 'mapbox://yanpogutsa.dp8fgjzc'
+},
+"source-layer": "routes-3apr3n",
+"layout": {
+"line-join": "round",
+"line-cap": "round"
+},
+"paint": {
+"line-color": "rgba(0,0,0,0.2)",
+"line-width":0
+},
+}); // Place polygon under these labels.
+
+map.addLayer({
+"id": "text-highlighted",
+"type": "symbol",
+"source": {
+type: 'vector',
+url: 'mapbox://yanpogutsa.dp8fgjzc'
+},
+"source-layer": "routes-3apr3n",
+"layout": {
+"text-field": ["to-string", ["get", "ref"]],
+"text-size": 8,
+"symbol-placement": "line",
+"text-offset": [0, 1],
+"text-font": [
+  "Open Sans Bold",
+  "Arial Unicode MS Regular"
+]
+},
+"paint": {
+"text-color": [
+  "interpolate",
+  ["linear"],
+  ["get", "color"],
+  1,
+  "#006ff7",
+  2,
+  "#484848",
+  3,
+  "#ffc33c",
+  4,
+  "#ff5575"
+]
+}, "filter": ["in", "id", ""]
+}); // Place polygon under these labels.
+ 
+map.addLayer({
+"id": "ngpt-highlighted",
+"type": "line",
+"source": {
+type: 'vector',
+url: 'mapbox://yanpogutsa.dp8fgjzc'
+},
+"source-layer": "routes-3apr3n",
+"layout": {
+"line-join": "round",
+"line-cap": "round",
+},
+"paint": {
+"line-color": [
+  "interpolate",
+  ["linear"],
+  ["get", "color"],
+  1,
+  "#006ff7",
+  2,
+  "#484848",
+  3,
+  "#ffc33c",
+  4,
+  "#ff5575"
+],
+"line-width": 1,
+"line-dasharray": [2, 2],
+"line-gap-width": 1
+},
+"filter": ["in", "id", ""]
+}, "text-highlighted"); // Place polygon under these labels.
+
+
+
+map.on('click', function(e) {
+// set bbox as 5px reactangle area around clicked point
+var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+var features = map.queryRenderedFeatures(bbox, { layers: ['ngpt'] });
+ 
+// Run through the selected features and set a filter
+// to match features with unique FIPS codes to activate
+// the `counties-highlighted` layer.
+var filter = features.reduce(function(memo, feature) {
+memo.push(feature.properties.id);
+return memo;
+}, ['in', 'id']);
+ 
+map.setFilter("ngpt-highlighted", filter);
+map.setFilter("text-highlighted", filter)
 });
 
-// When a click event occurs on a feature in the states layer, open a popup at the
-// location of the click, with description HTML from its properties.
+
+});
+
 map.on('click', 'MCD-stations', function (e) {
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
 .setHTML('<h3>'+e.features[0].properties.name+'</h3>'+'<p>Пасспоток 2018: ' + e.features[0].properties.Pass2018 + '</p>Пасспоток 2020: ' + e.features[0].properties.Pass2020 + '</p>'+ '</p>Пасспоток 2025: ' + e.features[0].properties.Pass2025 + '</p>')
 .addTo(map);
 });
-
 // Change the cursor to a pointer when the mouse is over the places layer.
 map.on('mouseenter', 'MCD-stations', function () {
 map.getCanvas().style.cursor = 'pointer';
@@ -56,7 +162,6 @@ map.getCanvas().style.cursor = 'pointer';
 map.on('mouseleave', 'MCD-stations', function () {
 map.getCanvas().style.cursor = '';
 });
-
 </script>
  
 </body>
