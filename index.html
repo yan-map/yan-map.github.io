@@ -12,8 +12,52 @@ body { margin:0; padding:0; }
 </style>
 </head>
 <body>
+ <style>
+#menu {
+background: #fff;
+position: absolute;
+z-index: 1;
+top: 10px;
+right: 10px;
+border-radius: 3px;
+width: 120px;
+border: 1px solid rgba(0,0,0,0.4);
+font-family: 'Open Sans', sans-serif;
+}
  
-<div id='map'></div>
+#menu a {
+font-size: 13px;
+color: #404040;
+display: block;
+margin: 0;
+padding: 0;
+padding: 10px;
+text-decoration: none;
+border-bottom: 1px solid rgba(0,0,0,0.25);
+text-align: center;
+}
+ 
+#menu a:last-child {
+border: none;
+}
+ 
+#menu a:hover {
+background-color: #f8f8f8;
+color: #404040;
+}
+ 
+#menu a.active {
+background-color: #3887be;
+color: #ffffff;
+}
+ 
+#menu a.active:hover {
+background: #3074a4;
+}
+</style>
+ 
+<nav id="menu"></nav>
+<div id="map"></div>
  
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoieWFucG9ndXRzYSIsImEiOiJjajBhMzJydzIwZmtmMndvY3ozejFicTdqIn0.T6DCFk1BSoEkdG-2agIoQQ';
@@ -26,17 +70,23 @@ zoom: 10
 });
  
 map.on('load', function() {
+
+map.addLayer({
+id: 'Спутник',
+source: {"type": "raster",  "url": "mapbox://mapbox.satellite", "tileSize": 256},
+type: "raster",
+layout: { 'visibility': 'none'},
+}, 'tram');
 // Add the source to query. In this example we're using
 // county polygons uploaded as vector tiles
-
 map.addLayer({
 "id": "ngpt",
 "type": "line",
 "source": {
 type: 'vector',
-url: 'mapbox://yanpogutsa.dp8fgjzc'
+url: 'mapbox://yanpogutsa.0bjo2z2v'
 },
-"source-layer": "routes-3apr3n",
+"source-layer": "route-5ag09v",
 "layout": {
 "line-join": "round",
 "line-cap": "round"
@@ -46,15 +96,14 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
 "line-width":0
 },
 }); // Place polygon under these labels.
-
 map.addLayer({
 "id": "text-highlighted",
 "type": "symbol",
 "source": {
 type: 'vector',
-url: 'mapbox://yanpogutsa.dp8fgjzc'
+url: 'mapbox://yanpogutsa.0bjo2z2v'
 },
-"source-layer": "routes-3apr3n",
+"source-layer": "route-5ag09v",
 "layout": {
 "text-field": ["to-string", ["get", "ref"]],
 "text-size": 8,
@@ -66,19 +115,7 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
 ]
 },
 "paint": {
-"text-color": [
-  "interpolate",
-  ["linear"],
-  ["get", "color"],
-  1,
-  "#006ff7",
-  2,
-  "#484848",
-  3,
-  "#ffc33c",
-  4,
-  "#ff5575"
-]
+"text-color": "#006ff7",
 }, "filter": ["in", "id", ""]
 }); // Place polygon under these labels.
  
@@ -87,36 +124,21 @@ map.addLayer({
 "type": "line",
 "source": {
 type: 'vector',
-url: 'mapbox://yanpogutsa.dp8fgjzc'
+url: 'mapbox://yanpogutsa.0bjo2z2v'
 },
-"source-layer": "routes-3apr3n",
+"source-layer": "route-5ag09v",
 "layout": {
 "line-join": "round",
 "line-cap": "round",
 },
 "paint": {
-"line-color": [
-  "interpolate",
-  ["linear"],
-  ["get", "color"],
-  1,
-  "#006ff7",
-  2,
-  "#484848",
-  3,
-  "#ffc33c",
-  4,
-  "#ff5575"
-],
+"line-color": "#006ff7",
 "line-width": 1,
 "line-dasharray": [2, 2],
 "line-gap-width": 1
 },
 "filter": ["in", "id", ""]
 }, "text-highlighted"); // Place polygon under these labels.
-
-
-
 map.on('click', function(e) {
 // set bbox as 5px reactangle area around clicked point
 var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
@@ -133,14 +155,42 @@ return memo;
 map.setFilter("ngpt-highlighted", filter);
 map.setFilter("text-highlighted", filter)
 });
-
 map.on('click', "ngpt-highlighted", function(e) {
 // set bbox as 5px reactangle area around clicked point
 map.setFilter("ngpt-highlighted", ["in", "id", ""]);
 map.setFilter("text-highlighted", ["in", "id", ""])
 });
-
 });
+
+var toggleableLayerIds = [ 'Спутник' ];
+ 
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+var id = toggleableLayerIds[i];
+ 
+var link = document.createElement('a');
+link.href = '#';
+link.className = 'active';
+link.textContent = id;
+ 
+link.onclick = function (e) {
+var clickedLayer = this.textContent;
+e.preventDefault();
+e.stopPropagation();
+ 
+var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+ 
+if (visibility === 'none') {
+map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+this.className = '';
+} else {
+this.className = 'active';
+map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+}
+};
+ 
+var layers = document.getElementById('menu');
+layers.appendChild(link);
+};
 
 map.on('click', 'MCD-stations', function (e) {
 new mapboxgl.Popup()
