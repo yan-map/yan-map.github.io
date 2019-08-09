@@ -131,7 +131,7 @@ url: 'mapbox://yanpogutsa.0bjo2z2v'
 "line-cap": "round",
 },
 "paint": {
-"line-color": "#006ff7",
+"line-color": '#2730df',
 "line-width": 1,
 "line-dasharray": [2, 2],
 "line-gap-width": 1
@@ -140,9 +140,9 @@ url: 'mapbox://yanpogutsa.0bjo2z2v'
 },); // Place polygon under these labels.
 });
 
-map.on('click', function(e) {
+map.on('click', 'places-5y0blc', function(e) {
 // set bbox as 5px reactangle area around clicked point
-var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+var bbox = [[e.point.x - 20, e.point.y - 20], [e.point.x + 20, e.point.y + 20]];
 var features = map.queryRenderedFeatures(bbox, { layers: ['ngpt'] });
  
 // Run through the selected features and set a filter
@@ -155,12 +155,32 @@ return memo;
  
 map.setFilter("ngpt-highlighted", filter);
 map.setFilter("text-highlighted", filter);
+
+map.setLayoutProperty('metro-lines','visibility','none');
+map.setLayoutProperty('metro-lines-constructing','visibility','none');
+map.setLayoutProperty('MCC copy','visibility','none');
+map.setLayoutProperty('MCD-lines','visibility','none');
+
+map.setLayoutProperty('metro-lines-copy','visibility','visible');
+map.setLayoutProperty('metro-lines-constructing copy','visibility','visible');
+map.setLayoutProperty('MCC copy 1','visibility','visible');
+map.setLayoutProperty('MCD-lines copy 1','visibility','visible');
 });
 
-map.on('click', "ngpt-highlighted", function(e) {
+map.on('click', 'ngpt-highlighted', function(e) {
 // set bbox as 5px reactangle area around clicked point
 map.setFilter("ngpt-highlighted", ["in", "id", ""]);
-map.setFilter("text-highlighted", ["in", "id", ""])
+map.setFilter("text-highlighted", ["in", "id", ""]);
+
+map.setLayoutProperty('metro-lines','visibility','visible');
+map.setLayoutProperty('metro-lines-constructing','visibility','visible');
+map.setLayoutProperty('MCC copy','visibility','visible');
+map.setLayoutProperty('MCD-lines','visibility','visible');
+
+map.setLayoutProperty('metro-lines-copy','visibility','none');
+map.setLayoutProperty('metro-lines-constructing copy','visibility','none');
+map.setLayoutProperty('MCC copy 1','visibility','none');
+map.setLayoutProperty('MCD-lines copy 1','visibility','none');
 });
 
 
@@ -219,11 +239,13 @@ new mapboxgl.Popup()
 map.on('mouseenter', 'places-5y0blc', function () {
 map.getCanvas().style.cursor = 'pointer';
 });
- 
+
 // Change it back to a pointer when it leaves.
 map.on('mouseleave', 'places-5y0blc', function () {
 map.getCanvas().style.cursor = '';
 });
+
+
 </script>
  
 </body>
