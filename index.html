@@ -19,7 +19,7 @@ position: absolute;
 z-index: 1;
 top: 10px;
 right: 10px;
-border-radius: 5px;
+border-radius: 6px;
 border: 1px solid rgba(0,0,0,0.4);
 font-family: 'Open Sans', sans-serif;
 }
@@ -29,6 +29,7 @@ font-size: 13px;
 color: #404040;
 display: block;
 margin: 0;
+border-radius: 5px;
 padding: 0;
 padding: 10px;
 text-decoration: none;
@@ -37,6 +38,7 @@ text-align: center;
 }
  
 #menu a:last-child {
+border-radius: 5px;
 border: none;
 }
  
@@ -47,10 +49,12 @@ color: #404040;
  
 #menu a.active {
 background-color: #3887be;
+border-radius: 5px;
 color: #ffffff;
 }
  
 #menu a.active:hover {
+border-radius: 5px;
 background: #3074a4;
 }
 </style>
@@ -131,7 +135,7 @@ url: 'mapbox://yanpogutsa.0bjo2z2v'
 "line-cap": "round",
 },
 "paint": {
-"line-color": '#2730df',
+"line-color": '#006ff7',
 "line-width": 1,
 "line-dasharray": [2, 2],
 "line-gap-width": 1
@@ -139,50 +143,6 @@ url: 'mapbox://yanpogutsa.0bjo2z2v'
 "filter": ["in", "trip_id", ""]
 },); // Place polygon under these labels.
 });
-
-map.on('click', 'places-5y0blc', function(e) {
-// set bbox as 5px reactangle area around clicked point
-var bbox = [[e.point.x - 20, e.point.y - 20], [e.point.x + 20, e.point.y + 20]];
-var features = map.queryRenderedFeatures(bbox, { layers: ['ngpt'] });
- 
-// Run through the selected features and set a filter
-// to match features with unique FIPS codes to activate
-// the `counties-highlighted` layer.
-var filter = features.reduce(function(memo, feature) {
-memo.push(feature.properties.trip_id);
-return memo;
-}, ['in', 'trip_id']);
- 
-map.setFilter("ngpt-highlighted", filter);
-map.setFilter("text-highlighted", filter);
-
-map.setLayoutProperty('metro-lines','visibility','none');
-map.setLayoutProperty('metro-lines-constructing','visibility','none');
-map.setLayoutProperty('MCC copy','visibility','none');
-map.setLayoutProperty('MCD-lines','visibility','none');
-
-map.setLayoutProperty('metro-lines-copy','visibility','visible');
-map.setLayoutProperty('metro-lines-constructing copy','visibility','visible');
-map.setLayoutProperty('MCC copy 1','visibility','visible');
-map.setLayoutProperty('MCD-lines copy 1','visibility','visible');
-});
-
-map.on('click', 'ngpt-highlighted', function(e) {
-// set bbox as 5px reactangle area around clicked point
-map.setFilter("ngpt-highlighted", ["in", "id", ""]);
-map.setFilter("text-highlighted", ["in", "id", ""]);
-
-map.setLayoutProperty('metro-lines','visibility','visible');
-map.setLayoutProperty('metro-lines-constructing','visibility','visible');
-map.setLayoutProperty('MCC copy','visibility','visible');
-map.setLayoutProperty('MCD-lines','visibility','visible');
-
-map.setLayoutProperty('metro-lines-copy','visibility','none');
-map.setLayoutProperty('metro-lines-constructing copy','visibility','none');
-map.setLayoutProperty('MCC copy 1','visibility','none');
-map.setLayoutProperty('MCD-lines copy 1','visibility','none');
-});
-
 
 var toggleableLayerIds = [ 'Спутник' ];
  
@@ -228,13 +188,13 @@ map.getCanvas().style.cursor = 'pointer';
 map.on('mouseleave', 'MCD-stations', function () {
 map.getCanvas().style.cursor = '';
 });
+
+var popup = new mapboxgl.Popup()
  
-map.on('click', 'places-5y0blc', function (e) {
-new mapboxgl.Popup()
-.setLngLat(e.lngLat)
+
+map.on('click', 'places-5y0blc', function (e) { popup.setLngLat(e.lngLat)
 .setHTML('<h3>'+e.features[0].properties.StationName+'</h3>'+'<p>Маршруты: ' + e.features[0].properties.RouteNumbers + '</p>')
-.addTo(map);
-});
+.addTo(map);});
 // Change the cursor to a pointer when the mouse is over the places layer.
 map.on('mouseenter', 'places-5y0blc', function () {
 map.getCanvas().style.cursor = 'pointer';
@@ -245,6 +205,52 @@ map.on('mouseleave', 'places-5y0blc', function () {
 map.getCanvas().style.cursor = '';
 });
 
+map.on('click', 'places-5y0blc', function(e) {
+// set bbox as 5px reactangle area around clicked point
+var bbox = [[e.point.x - 20, e.point.y - 20], [e.point.x + 20, e.point.y + 20]];
+var features = map.queryRenderedFeatures(bbox, { layers: ['ngpt'] });
+ 
+// Run through the selected features and set a filter
+// to match features with unique FIPS codes to activate
+// the `counties-highlighted` layer.
+var filter = features.reduce(function(memo, feature) {
+memo.push(feature.properties.trip_id);
+return memo;
+}, ['in', 'trip_id']);
+ 
+map.setFilter("ngpt-highlighted", filter);
+map.setFilter("text-highlighted", filter);
+
+map.setLayoutProperty('metro-lines','visibility','none');
+map.setLayoutProperty('metro-lines-constructing','visibility','none');
+map.setLayoutProperty('MCC copy','visibility','none');
+map.setLayoutProperty('MCC','visibility','none');
+map.setLayoutProperty('MCD-lines','visibility','none');
+
+map.setLayoutProperty('metro-lines-copy','visibility','visible');
+map.setLayoutProperty('metro-lines-constructing copy','visibility','visible');
+map.setLayoutProperty('MCC copy 1','visibility','visible');
+map.setLayoutProperty('MCD-lines copy 1','visibility','visible');
+});
+
+//map.on('click', 'ngpt-highlighted', function(e) {
+// set bbox as 5px reactangle area around clicked point
+
+popup.on('close', function(e) {
+map.setFilter("ngpt-highlighted", ["in", "id", ""]);
+map.setFilter("text-highlighted", ["in", "id", ""]);
+
+map.setLayoutProperty('metro-lines','visibility','visible');
+map.setLayoutProperty('metro-lines-constructing','visibility','visible');
+map.setLayoutProperty('MCC copy','visibility','visible');
+map.setLayoutProperty('MCC','visibility','visible');
+map.setLayoutProperty('MCD-lines','visibility','visible');
+
+map.setLayoutProperty('metro-lines-copy','visibility','none');
+map.setLayoutProperty('metro-lines-constructing copy','visibility','none');
+map.setLayoutProperty('MCC copy 1','visibility','none');
+map.setLayoutProperty('MCD-lines copy 1','visibility','none');
+});
 
 </script>
  
