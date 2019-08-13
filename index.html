@@ -86,9 +86,9 @@ map.addLayer({
 "type": "line",
 "source": {
 type: 'vector',
-url: 'mapbox://yanpogutsa.0bjo2z2v'
+url: 'mapbox://yanpogutsa.dp8fgjzc'
 },
-"source-layer": "route-5ag09v",
+"source-layer": "routes-3apr3n",
 "layout": {
 "line-join": "round",
 "line-cap": "round"
@@ -104,11 +104,11 @@ map.addLayer({
 "type": "symbol",
 "source": {
 type: 'vector',
-url: 'mapbox://yanpogutsa.0bjo2z2v'
+url: 'mapbox://yanpogutsa.dp8fgjzc'
 },
-"source-layer": "route-5ag09v",
+"source-layer": "routes-3apr3n",
 "layout": {
-"text-field": ["to-string", ["get", "route"]],
+"text-field": ["to-string", ["get", "ref"]],
 "text-size": 8,
 "symbol-placement": "line",
 "text-offset": [0, 1],
@@ -118,8 +118,20 @@ url: 'mapbox://yanpogutsa.0bjo2z2v'
 ]
 },
 "paint": {
-"text-color": "#006ff7",
-}, "filter": ["in", "trip_id", ""]
+"text-color": [
+  "interpolate",
+  ["linear"],
+  ["get", "color"],
+  1,
+  "#006ff7",
+  1.75,
+  "#484848",
+  2.5,
+  "#ffc33c",
+  4,
+  "#ff5575"
+],
+}, "filter": ["in", "fid", ""]
 }); // Place polygon under these labels.
 
 map.addLayer({
@@ -127,21 +139,122 @@ map.addLayer({
 "type": "line",
 "source": {
 type: 'vector',
-url: 'mapbox://yanpogutsa.0bjo2z2v'
+url: 'mapbox://yanpogutsa.dp8fgjzc'
 },
-"source-layer": "route-5ag09v",
+"source-layer": "routes-3apr3n",
 "layout": {
 "line-join": "round",
 "line-cap": "round",
 },
 "paint": {
-"line-color": '#006ff7',
+"line-color": [
+  "interpolate",
+  ["linear"],
+  ["get", "color"],
+  1,
+  "#006ff7",
+  1.75,
+  "#484848",
+  2.5,
+  "#ffc33c",
+  4,
+  "#ff5575"
+],
 "line-width": 1,
 "line-dasharray": [2, 2],
 "line-gap-width": 1
 },
-"filter": ["in", "trip_id", ""]
+"filter": ["in", "fid", ""]
 },); // Place polygon under these labels.
+
+map.addLayer({
+"id": "ngpt-pass",
+"type": "circle",
+"source": {
+type: 'vector',
+url: 'mapbox://yanpogutsa.4f2h0yzc'
+},
+"source-layer": "ngpt-pass-18g3e0",
+"layout": {
+"visibility": "none",
+},
+"paint": {
+"circle-color": "hsla(213, 100%, 48%, 0.2)",
+"circle-radius": [
+  "interpolate",
+  [
+    "cubic-bezier",
+    0.3,
+    1,
+    1,
+    1
+  ],
+  [
+    "get",
+    "Пассажиропоток по входу за день"
+  ],
+  0,
+  15,
+  11832,
+  80
+]
+},
+"minzoom": 13
+}); // Place polygon under these labels.
+
+map.addLayer({
+"id": "ngpt-pass-text",
+"type": "symbol",
+"source": {
+type: 'vector',
+url: 'mapbox://yanpogutsa.4f2h0yzc'
+},
+"source-layer": "ngpt-pass-18g3e0",
+"layout": {
+"visibility": "none",
+"text-field": [
+  "to-string",
+  [
+    "get",
+    "Пассажиропоток по входу за день"
+  ]
+],
+"text-size": 8,
+"symbol-placement": "point",
+"text-offset": [
+  "interpolate",
+  [
+    "cubic-bezier",
+    0.3,
+    1,
+    1,
+    1
+  ],
+  [
+    "get",
+    "Пассажиропоток по входу за день"
+  ],
+  1,
+  ["literal", [0, 1]],
+  11832,
+  ["literal", [0, 5]]
+],
+"text-font": [
+  "DIN Offc Pro Medium",
+  "Arial Unicode MS Regular"
+],
+"icon-allow-overlap": true,
+"icon-ignore-placement": true,
+},
+"paint": {
+"text-color": "#006ef5",
+"text-halo-color":"hsla(0, 0%, 100%, 0.5)",
+"text-halo-width": 1.5
+},
+"minzoom": 13
+},); // Place polygon under these labels.
+
+
 });
 
 var toggleableLayerIds = [ 'Спутник' ];
@@ -214,9 +327,9 @@ var features = map.queryRenderedFeatures(bbox, { layers: ['ngpt'] });
 // to match features with unique FIPS codes to activate
 // the `counties-highlighted` layer.
 var filter = features.reduce(function(memo, feature) {
-memo.push(feature.properties.trip_id);
+memo.push(feature.properties.fid);
 return memo;
-}, ['in', 'trip_id']);
+}, ['in', 'fid']);
  
 map.setFilter("ngpt-highlighted", filter);
 map.setFilter("text-highlighted", filter);
@@ -231,14 +344,18 @@ map.setLayoutProperty('metro-lines-copy','visibility','visible');
 map.setLayoutProperty('metro-lines-constructing copy','visibility','visible');
 map.setLayoutProperty('MCC copy 1','visibility','visible');
 map.setLayoutProperty('MCD-lines copy 1','visibility','visible');
+map.setLayoutProperty('ngpt-pass','visibility','visible');
+map.setLayoutProperty('ngpt-pass-text','visibility','visible');
 });
+
+
 
 //map.on('click', 'ngpt-highlighted', function(e) {
 // set bbox as 5px reactangle area around clicked point
 
 popup.on('close', function(e) {
-map.setFilter("ngpt-highlighted", ["in", "id", ""]);
-map.setFilter("text-highlighted", ["in", "id", ""]);
+map.setFilter("ngpt-highlighted", ["in", "fid", ""]);
+map.setFilter("text-highlighted", ["in", "fid", ""]);
 
 map.setLayoutProperty('metro-lines','visibility','visible');
 map.setLayoutProperty('metro-lines-constructing','visibility','visible');
@@ -250,6 +367,8 @@ map.setLayoutProperty('metro-lines-copy','visibility','none');
 map.setLayoutProperty('metro-lines-constructing copy','visibility','none');
 map.setLayoutProperty('MCC copy 1','visibility','none');
 map.setLayoutProperty('MCD-lines copy 1','visibility','none');
+map.setLayoutProperty('ngpt-pass','visibility','none');
+map.setLayoutProperty('ngpt-pass-text','visibility','none');
 });
 
 </script>
