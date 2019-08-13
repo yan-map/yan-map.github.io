@@ -97,6 +97,7 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
 "line-color": "rgba(0,0,0,0.2)",
 "line-width":0
 },
+minZoom: 10,
 }); // Place polygon under these labels.
 
 map.addLayer({
@@ -131,7 +132,9 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
   4,
   "#ff5575"
 ],
-}, "filter": ["in", "fid", ""]
+},
+ minZoom: 10,
+ "filter": ["in", "fid", ""]
 }); // Place polygon under these labels.
 
 map.addLayer({
@@ -164,6 +167,7 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
 "line-dasharray": [2, 2],
 "line-gap-width": 1
 },
+ minZoom: 10,
 "filter": ["in", "fid", ""]
 },); // Place polygon under these labels.
 
