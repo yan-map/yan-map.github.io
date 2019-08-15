@@ -3,7 +3,6 @@
 <head>
 <meta charset='utf-8' />
 <title>Карта МЦД</title>
-<link rel="shortcut icon" href="data/favicon.gif" />
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css' rel='stylesheet' />
@@ -15,10 +14,10 @@ body { margin:0; padding:0; }
 <body>
  <style>
 #menu {
-background: #fff;
+
 position: absolute;
 z-index: 1;
-top: 10px;
+bottom: 25px;
 right: 10px;
 border-radius: 24px;
 font-family: 'Roboto', sans-serif;
@@ -26,21 +25,21 @@ font-weight:bold;
 }
  
 #menu a {
+background: #fff;
 font-size: 13px;
 color: #404040;
 display: block;
 margin: 0;
 border-radius: 24px;
-padding: 0;
 padding: 10px;
 text-decoration: none;
-border-bottom: 1px solid rgba(0,0,0,0.25);
+border-bottom: 3px solid rgba(0,0,0,0.25);
 text-align: center;
 }
  
 #menu a:last-child {
 border-radius: 24px;
-border: none;
+border-bottom: 3px solid rgba(0,0,0,0.25);
 }
  
 #menu a:hover {
@@ -76,6 +75,44 @@ zoom: 10
  
 map.on('load', function() {
 map.addLayer({
+"id": "Проекты",
+"type": "fill",
+"source": {
+type: 'vector',
+url: 'mapbox://yanpogutsa.67zh48hu'
+},
+"source-layer": "PPT-WIP-1movuq",
+"layout": {
+"visibility": "none",
+},
+"paint": {
+"fill-color": "hsla(158, 53%, 48%, 0.2)",
+"fill-outline-color": "hsla(158, 53%, 48%, 0.5)"
+},
+},'railway-6jlfaf'); // Place polygon under these labels.
+
+map.addLayer({
+"id": "ППТ",
+"type": "fill",
+"source": {
+type: 'vector',
+url: 'mapbox://yanpogutsa.56ogmwov'
+},
+"source-layer": "PPT-122uv6",
+"layout": {
+"visibility": "none",
+},
+"paint": {
+"fill-color": "hsla(0, 100%, 33%, 0.2)",
+"fill-outline-color": "hsla(0, 100%, 33%, 0.5)"
+},
+},'railway-6jlfaf'); // Place polygon under these labels.
+
+
+
+
+///////////////////////////////////////////////
+map.addLayer({
 id: 'Спутник',
 source: {"type": "raster",  "url": "mapbox://mapbox.satellite", "tileSize": 256},
 type: "raster",
@@ -99,7 +136,7 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
 "line-color": "rgba(0,0,0,0.2)",
 "line-width":0
 },
-minZoom: 10,
+"minZoom": 10,
 }); // Place polygon under these labels.
 map.addLayer({
 "id": "text-highlighted",
@@ -134,7 +171,7 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
   "#ff5575"
 ],
 },
- minZoom: 10,
+"minZoom": 10,
  "filter": ["in", "fid", ""]
 }); // Place polygon under these labels.
 map.addLayer({
@@ -175,7 +212,7 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
   10
 ]
 },
- minZoom: 10,
+"minZoom": 10,
 "filter": ["in", "fid", ""]
 },); // Place polygon under these labels.
 map.addLayer({
@@ -211,7 +248,7 @@ url: 'mapbox://yanpogutsa.4f2h0yzc'
 ]
 },
 "minzoom": 13
-}); // Place polygon under these labels.
+},'places-5y0blc2'); // Place polygon under these labels.
 map.addLayer({
 "id": "ngpt-pass-text",
 "type": "symbol",
@@ -262,9 +299,9 @@ url: 'mapbox://yanpogutsa.4f2h0yzc'
 "text-halo-width": 1.5
 },
 "minzoom": 13
-},); // Place polygon under these labels.
+},'places-5y0blc2'); // Place polygon under these labels.
 });
-var toggleableLayerIds = [ 'Спутник' ];
+var toggleableLayerIds = [ 'Спутник','Проекты','ППТ' ];
  
 for (var i = 0; i < toggleableLayerIds.length; i++) {
 var id = toggleableLayerIds[i];
@@ -364,6 +401,31 @@ map.setLayoutProperty('MCC copy 1','visibility','none');
 map.setLayoutProperty('MCD-lines copy 1','visibility','none');
 map.setLayoutProperty('ngpt-pass','visibility','none');
 map.setLayoutProperty('ngpt-pass-text','visibility','none');
+});
+
+///////////////////////////
+map.on('click', 'Проекты', function (e) { popup.setLngLat(e.lngLat)
+.setHTML('<h3>'+e.features[0].properties.NAME+'</h3>'+'<p>Вид ППТ: ' + e.features[0].properties.VID_PPT + '</p>'+'<p>Дата начала разработки: ' + e.features[0].properties.DATA_DOC_RAZR + '</p>'+'<p>Исполнитель: ' + e.features[0].properties.ISPOLNITEL + '</p>')
+.addTo(map);});
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'Проекты', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'Проекты', function () {
+map.getCanvas().style.cursor = '';
+});
+
+map.on('click', 'ППТ', function (e) { popup.setLngLat(e.lngLat)
+.setHTML('<h3>'+e.features[0].properties.NAME+'</h3>'+'<p>Вид ППТ: ' + e.features[0].properties.VID_PPT + '</p>'+'<p>Дата утверждения: ' + e.features[0].properties.DATA_DOC_UTV + '</p>'+'<p>Исполнитель: ' + e.features[0].properties.ISPOLNITEL + '</p>')
+.addTo(map);});
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'ППТ', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'ППТ', function () {
+map.getCanvas().style.cursor = '';
 });
 </script>
  
