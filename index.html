@@ -3,6 +3,7 @@
 <head>
 <meta charset='utf-8' />
 <title>Карта МЦД</title>
+<link rel="shortcut icon" href="data/favicon.gif" />
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css' rel='stylesheet' />
@@ -17,7 +18,7 @@ body { margin:0; padding:0; }
 
 position: absolute;
 z-index: 1;
-bottom: 25px;
+bottom: 30px;
 right: 10px;
 border-radius: 24px;
 font-family: 'Roboto', sans-serif;
@@ -86,8 +87,8 @@ url: 'mapbox://yanpogutsa.67zh48hu'
 "visibility": "none",
 },
 "paint": {
-"fill-color": "hsla(158, 53%, 48%, 0.2)",
-"fill-outline-color": "hsla(158, 53%, 48%, 0.5)"
+"fill-color": "hsla(224, 32%, 51%, 0.2)",
+"fill-outline-color": "hsla(224, 32%, 51%, 0.2)"
 },
 },'railway-6jlfaf'); // Place polygon under these labels.
 
@@ -117,7 +118,7 @@ id: 'Спутник',
 source: {"type": "raster",  "url": "mapbox://mapbox.satellite", "tileSize": 256},
 type: "raster",
 layout: { 'visibility': 'none'},
-}, 'tram');
+}, 'railway-6jlfaf');
 // Add the source to query. In this example we're using
 // county polygons uploaded as vector tiles
 map.addLayer({
