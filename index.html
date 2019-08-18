@@ -15,7 +15,6 @@ body { margin:0; padding:0; }
 <body>
  <style>
 #menu {
-
 position: absolute;
 z-index: 1;
 bottom: 30px;
@@ -71,7 +70,11 @@ container: 'map',
 style: 'mapbox://styles/yanpogutsa/cjzbf944b07bh1dqwjgbdjp8u',
 center: [37.622232, 55.7436618],
 minZoom: 2,
-zoom: 10
+zoom: 10,
+maxBounds: [
+[36.5401693241436050, 55.0203058196276160], // Southwest coordinates
+[38.3135420226066969, 56.1505434064830737]  // Northeast coordinates
+]
 });
  
 map.on('load', function() {
@@ -90,8 +93,7 @@ url: 'mapbox://yanpogutsa.67zh48hu'
 "fill-color": "hsla(224, 32%, 51%, 0.2)",
 "fill-outline-color": "hsla(224, 32%, 51%, 0.5)"
 },
-},'railway-6jlfaf'); // Place polygon under these labels.
-
+},'admin-2-boundary'); // Place polygon under these labels.
 map.addLayer({
 "id": "ППТ",
 "type": "fill",
@@ -107,11 +109,7 @@ url: 'mapbox://yanpogutsa.56ogmwov'
 "fill-color": "hsla(0, 100%, 33%, 0.2)",
 "fill-outline-color": "hsla(0, 100%, 33%, 0.5)"
 },
-},'railway-6jlfaf'); // Place polygon under these labels.
-
-
-
-
+},'admin-2-boundary'); // Place polygon under these labels.
 ///////////////////////////////////////////////
 map.addLayer({
 id: 'Спутник',
@@ -122,7 +120,7 @@ source: {'type': 'raster',
     },
 type: "raster",
 layout: { 'visibility': 'none'},
-}, 'MCC');
+}, 'moscow-boundary-aghg2c');
 // Add the source to query. In this example we're using
 // county polygons uploaded as vector tiles
 map.addLayer({
@@ -408,7 +406,6 @@ map.setLayoutProperty('MCD-lines copy 1','visibility','none');
 map.setLayoutProperty('ngpt-pass','visibility','none');
 map.setLayoutProperty('ngpt-pass-text','visibility','none');
 });
-
 ///////////////////////////
 map.on('click', 'Проекты', function (e) { popup.setLngLat(e.lngLat)
 .setHTML('<h3>'+e.features[0].properties.NAME+'</h3>'+'<p>Вид ППТ: ' + e.features[0].properties.VID_PPT + '</p>'+'<p>Дата начала разработки: ' + e.features[0].properties.DATA_DOC_RAZR + '</p>'+'<p>Исполнитель: ' + e.features[0].properties.ISPOLNITEL + '</p>')
@@ -421,7 +418,6 @@ map.getCanvas().style.cursor = 'pointer';
 map.on('mouseleave', 'Проекты', function () {
 map.getCanvas().style.cursor = '';
 });
-
 map.on('click', 'ППТ', function (e) { popup.setLngLat(e.lngLat)
 .setHTML('<h3>'+e.features[0].properties.NAME+'</h3>'+'<p>Вид ППТ: ' + e.features[0].properties.VID_PPT + '</p>'+'<p>Дата утверждения: ' + e.features[0].properties.DATA_DOC_UTV + '</p>'+'<p>Исполнитель: ' + e.features[0].properties.ISPOLNITEL + '</p>')
 .addTo(map);});
