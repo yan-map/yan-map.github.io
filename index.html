@@ -115,10 +115,14 @@ url: 'mapbox://yanpogutsa.56ogmwov'
 ///////////////////////////////////////////////
 map.addLayer({
 id: 'Спутник',
-source: {"type": "raster",  "url": "mapbox://mapbox.satellite", "tileSize": 256},
+source: {'type': 'raster',
+        'tiles': ['https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'],
+        'tileSize': 128,
+        'scheme': 'xyz',
+    },
 type: "raster",
 layout: { 'visibility': 'none'},
-}, 'railway-6jlfaf');
+}, 'MCC');
 // Add the source to query. In this example we're using
 // county polygons uploaded as vector tiles
 map.addLayer({
