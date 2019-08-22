@@ -21,7 +21,6 @@ body { margin:0; padding:0; }
 	left: 10px;
 	top: 13px;
 } 
-
 #menu {
 display: button;
 position: absolute;
@@ -84,8 +83,44 @@ maxBounds: [
 ]
 });
  
-
 map.on('load', function() {
+map.addLayer({
+"id": "ДКР",
+"type": "line",
+"source": {
+type: 'vector',
+url: 'mapbox://yanpogutsa.0p9ye6kw'
+},
+"source-layer": "l_blag-a9ug8y",
+"layout": {
+"visibility": "none",
+"line-cap": "butt",
+"line-join": "round",
+},
+"paint": {
+"line-opacity": 0.5,
+"line-color": [
+  "case",
+  [
+    ">=",
+    ["get", "Year"],
+    2019
+  ],
+  "#3cbe66",
+  "hsl(324, 16%, 34%)"
+],
+"line-width": [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  11,
+  2,
+  22,
+  30
+],
+
+},
+},'admin-2-boundary'); // Place polygon under these labels.
 map.addLayer({
 "id": "Проекты",
 "type": "fill",
@@ -313,7 +348,7 @@ url: 'mapbox://yanpogutsa.4f2h0yzc'
 "minzoom": 13
 },'settlement-label'); // Place polygon under these labels.
 });
-var toggleableLayerIds = [ 'Спутник','Проекты','ППТ' ];
+var toggleableLayerIds = [ 'Проекты','ППТ','ДКР','Спутник' ];
  
 for (var i = 0; i < toggleableLayerIds.length; i++) {
 var id = toggleableLayerIds[i];
@@ -417,15 +452,11 @@ map.setPaintProperty('Проекты','fill-color','hsla(224, 32%, 51%, 0.2)');
 map.setPaintProperty('ППТ','fill-color','hsla(0, 100%, 33%, 0.2)');
 map.setFilter("Проекты", undefined); //["in", "REG_NUM", ""]);
 map.setFilter("ППТ", undefined); //["in", "REG_NUM", ""]);
-
-
-
 });
 ///////////////////////////
 map.on('click', 'Проекты', function (e) { popup.setLngLat(e.lngLat)
 .setHTML('<h3>'+e.features[0].properties.NAME+'</h3>'+'<p>Вид ППТ: ' + e.features[0].properties.VID_PPT + '</p>'+'<p>Дата начала разработки: ' + e.features[0].properties.DATA_DOC_RAZR + '</p>'+'<p>Исполнитель: ' + e.features[0].properties.ISPOLNITEL + '</p>')
 .addTo(map);
-
 var feature = e.features[0];
 map.setFilter("Проекты", ['in','REG_NUM', feature.properties.REG_NUM]);
 map.setPaintProperty('Проекты','fill-color','hsla(224, 32%, 51%, 0.7)');
@@ -438,9 +469,6 @@ map.getCanvas().style.cursor = 'pointer';
 map.on('mouseleave', 'Проекты', function () {
 map.getCanvas().style.cursor = '';
 });
-
-
-
 map.on('click', 'ППТ', function (e) { popup.setLngLat(e.lngLat)
 .setHTML('<h3>'+e.features[0].properties.NAME+'</h3>'+'<p>Вид ППТ: ' + e.features[0].properties.VID_PPT + '</p>'+'<p>Дата утверждения: ' + e.features[0].properties.DATA_DOC_UTV + '</p>'+'<p>Исполнитель: ' + e.features[0].properties.ISPOLNITEL + '</p>')
 .addTo(map);
@@ -457,6 +485,19 @@ map.on('mouseleave', 'ППТ', function () {
 map.getCanvas().style.cursor = '';
 });
 
+map.on('click', 'ДКР', function (e) { popup.setLngLat(e.lngLat)
+.setHTML('<h3>'+e.features[0].properties.Year+' | '+e.features[0].properties.Name+'</h3>')
+.addTo(map);
+});
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'ДКР', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'ДКР', function () {
+map.getCanvas().style.cursor = '';
+});
+
 var geocoder = new MapboxGeocoder({
 accessToken: mapboxgl.accessToken,
 mapboxgl: mapboxgl,
@@ -465,7 +506,6 @@ bbox: [36.5401693241436050, 55.0203058196276160, 38.3135420226066969, 56.1505434
 });
  
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
-
 </script>
  
 </body>
