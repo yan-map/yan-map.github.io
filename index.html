@@ -92,6 +92,16 @@ type: 'vector',
 url: 'mapbox://yanpogutsa.0p9ye6kw'
 },
 "source-layer": "l_blag-a9ug8y",
+"filter": [
+  "all",
+  [
+    "match",
+    ["get", "Year"],
+    [9999],
+    false,
+    true
+  ]
+],
 "layout": {
 "visibility": "none",
 "line-cap": "butt",
