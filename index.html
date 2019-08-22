@@ -21,20 +21,21 @@ body { margin:0; padding:0; }
 	left: 10px;
 	top: 13px;
 } 
+
 #menu {
 display: button;
 position: absolute;
 z-index: 1;
 bottom: 20px; 
 right: 7px;
-font-family: 'Roboto', sans-serif;
-font-weight:bold;
+font-family: 'PT Sans', monospace;
+font-weight: bold;
 }
  
 #menu a {
 background: #fff;
 margin-right: 3px;
-font-size: 13px;
+font-size: 14px;
 color: #777;
 border-radius: 24px;
 padding: 10px;
@@ -132,7 +133,7 @@ url: 'mapbox://yanpogutsa.0p9ye6kw'
 },
 },'admin-2-boundary'); // Place polygon under these labels.
 map.addLayer({
-"id": "Проекты",
+"id": "🛠 ППТ",
 "type": "fill",
 "source": {
 type: 'vector',
@@ -165,7 +166,7 @@ url: 'mapbox://yanpogutsa.56ogmwov'
 },'admin-2-boundary'); // Place polygon under these labels.
 ///////////////////////////////////////////////
 map.addLayer({
-id: 'Спутник',
+id: '🗺',
 source: {'type': 'raster',
         'tiles': ['https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'],
         'tileSize': 128,
@@ -358,7 +359,7 @@ url: 'mapbox://yanpogutsa.4f2h0yzc'
 "minzoom": 13
 },'settlement-label'); // Place polygon under these labels.
 });
-var toggleableLayerIds = [ 'Проекты','ППТ','ДКР','Спутник' ];
+var toggleableLayerIds = [ '🛠 ППТ','ППТ','ДКР','🗺' ];
  
 for (var i = 0; i < toggleableLayerIds.length; i++) {
 var id = toggleableLayerIds[i];
@@ -458,25 +459,25 @@ map.setLayoutProperty('MCC copy 1','visibility','none');
 map.setLayoutProperty('MCD-lines copy 1','visibility','none');
 map.setLayoutProperty('ngpt-pass','visibility','none');
 map.setLayoutProperty('ngpt-pass-text','visibility','none');
-map.setPaintProperty('Проекты','fill-color','hsla(224, 32%, 51%, 0.2)');
+map.setPaintProperty('🛠 ППТ','fill-color','hsla(224, 32%, 51%, 0.2)');
 map.setPaintProperty('ППТ','fill-color','hsla(0, 100%, 33%, 0.2)');
-map.setFilter("Проекты", undefined); //["in", "REG_NUM", ""]);
+map.setFilter("🛠 ППТ", undefined); //["in", "REG_NUM", ""]);
 map.setFilter("ППТ", undefined); //["in", "REG_NUM", ""]);
 });
 ///////////////////////////
-map.on('click', 'Проекты', function (e) { popup.setLngLat(e.lngLat)
+map.on('click', '🛠 ППТ', function (e) { popup.setLngLat(e.lngLat)
 .setHTML('<h3>'+e.features[0].properties.NAME+'</h3>'+'<p>Вид ППТ: ' + e.features[0].properties.VID_PPT + '</p>'+'<p>Дата начала разработки: ' + e.features[0].properties.DATA_DOC_RAZR + '</p>'+'<p>Исполнитель: ' + e.features[0].properties.ISPOLNITEL + '</p>')
 .addTo(map);
 var feature = e.features[0];
-map.setFilter("Проекты", ['in','REG_NUM', feature.properties.REG_NUM]);
-map.setPaintProperty('Проекты','fill-color','hsla(224, 32%, 51%, 0.7)');
+map.setFilter("🛠 ППТ", ['in','REG_NUM', feature.properties.REG_NUM]);
+map.setPaintProperty('🛠 ППТ','fill-color','hsla(224, 32%, 51%, 0.7)');
 });
 // Change the cursor to a pointer when the mouse is over the places layer.
-map.on('mouseenter', 'Проекты', function () {
+map.on('mouseenter', '🛠 ППТ', function () {
 map.getCanvas().style.cursor = 'pointer';
 });
 // Change it back to a pointer when it leaves.
-map.on('mouseleave', 'Проекты', function () {
+map.on('mouseleave', '🛠 ППТ', function () {
 map.getCanvas().style.cursor = '';
 });
 map.on('click', 'ППТ', function (e) { popup.setLngLat(e.lngLat)
