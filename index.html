@@ -29,7 +29,7 @@ position: absolute;
 z-index: 1;
 bottom: 20px; 
 right: 7px;
-font-family: 'PT Sans', monospace;
+font-family: Arial, Helvetica, sans-serif;
 font-weight: bold;
 }
  
@@ -79,6 +79,8 @@ attributionControl: false,
 center: [37.618, 55.751],
 minZoom: 2,
 zoom: 10,
+bearingSnap: 30,
+doubleClickZoom: false,
 maxBounds: [
 [36.5401693241436050, 55.0203058196276160], // Southwest coordinates
 [38.3135420226066969, 56.1505434064830737]  // Northeast coordinates
@@ -86,6 +88,21 @@ maxBounds: [
 });
  
 map.on('load', function() {
+
+map.addLayer ({
+	"id":"ped_bridges_mcd",
+	"type": "fill",
+	"source":{
+		"type": "geojson",
+		"data": "./data/ped.json"
+	},
+	"paint":{
+	"fill-color": "#3abb8c",
+	"fill-outline-color": "#26976d",
+	"fill-opacity":0.7},
+});
+
+
 map.addLayer({
 "id": "ДКР",
 "type": "line",
@@ -133,6 +150,7 @@ url: 'mapbox://yanpogutsa.0p9ye6kw'
 
 },
 },'admin-2-boundary'); // Place polygon under these labels.
+
 map.addLayer({
 "id": "🛠 ППТ",
 "type": "fill",
@@ -272,41 +290,8 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
 },
 "minZoom": 10,
 "filter": ["in", "fid", ""]
-},); // Place polygon under these labels.
-map.addLayer({
-"id": "ngpt-pass",
-"type": "circle",
-"source": {
-type: 'vector',
-url: 'mapbox://yanpogutsa.4f2h0yzc'
-},
-"source-layer": "ngpt-pass-18g3e0",
-"layout": {
-"visibility": "none",
-},
-"paint": {
-"circle-color": "hsla(213, 100%, 48%, 0.2)",
-"circle-radius": [
-  "interpolate",
-  [
-    "cubic-bezier",
-    0.3,
-    1,
-    1,
-    1
-  ],
-  [
-    "get",
-    "pass"
-  ],
-  0,
-  15,
-  11832,
-  80
-]
-},
-"minzoom": 13
-},'places-5y0blc2'); // Place polygon under these labels.
+},'text-highlighted');
+ // Place polygon under these labels.
 map.addLayer({
 "id": "ngpt-pass-text",
 "type": "symbol",
@@ -358,7 +343,45 @@ url: 'mapbox://yanpogutsa.4f2h0yzc'
 "text-halo-width": 1.5
 },
 "minzoom": 13
-},'settlement-label'); // Place polygon under these labels.
+},);
+
+map.addLayer({
+"id": "ngpt-pass",
+"type": "circle",
+"source": {
+type: 'vector',
+url: 'mapbox://yanpogutsa.4f2h0yzc'
+},
+"source-layer": "ngpt-pass-18g3e0",
+"layout": {
+"visibility": "none",
+},
+"paint": {
+"circle-color": "hsla(213, 100%, 48%, 0.2)",
+"circle-radius": [
+  "interpolate",
+  [
+    "cubic-bezier",
+    0.3,
+    1,
+    1,
+    1
+  ],
+  [
+    "get",
+    "pass"
+  ],
+  0,
+  15,
+  11832,
+  80
+]
+},
+"minzoom": 13
+},'places-5y0blc');
+ // Place polygon under these labels.
+ // Place polygon under these labels.
+
 });
 var toggleableLayerIds = [ '🛠 ППТ','ППТ','ДКР','🗺' ];
  
@@ -514,10 +537,19 @@ var geocoder = new MapboxGeocoder({
 accessToken: mapboxgl.accessToken,
 mapboxgl: mapboxgl,
 placeholder: "Поиск",
+
 bbox: [36.5401693241436050, 55.0203058196276160, 38.3135420226066969, 56.1505434064830737],
 });
  
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+map.on('dblclick',function windowOpen(e) { 
+  var url1='https://www.google.com/maps/@?api=1&map_action=pano&pano=tu510ie_z4ptBZYo2BGEJg&viewpoint='+e.lngLat.lat+','+e.lngLat.lng+'&heading=0&pitch=10&fov=250';
+            Window = window.open( 
+              url1, 
+                "_blank"); 
+        });
+
 </script>
  
 </body>
