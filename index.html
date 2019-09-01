@@ -86,8 +86,29 @@ maxBounds: [
 [38.3135420226066969, 56.1505434064830737]  // Northeast coordinates
 ]
 });
- 
+
 map.on('load', function() {
+
+map.addLayer({
+        'id': '3d-buildings',
+        'source': 'composite',
+        'source-layer': 'building',
+        'filter': ['==', 'extrude', 'true'],
+        'type': 'fill-extrusion',
+        'minzoom': 15,
+        'paint': {
+            'fill-extrusion-color': '#cac7d1',
+
+            // use an 'interpolate' expression to add a smooth transition effect to the
+            // buildings as the user zooms in
+            'fill-extrusion-height': ["get", "height"],
+            'fill-extrusion-base': ["get", "min_height"],
+            'fill-extrusion-opacity': .6
+        },
+				'layout': {
+					'visibility': 'none',
+				}
+    },'housenum-label');
 
 map.addLayer ({
 	"id":"ped_bridges_mcd",
@@ -412,6 +433,8 @@ map.setLayoutProperty(clickedLayer, 'visibility', 'none');
 var layers = document.getElementById('menu');
 layers.appendChild(link);
 };
+
+
 map.on('click', 'MCD_stations', function (e) {
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
@@ -550,6 +573,63 @@ map.on('dblclick',function windowOpen(e) {
                 "_blank"); 
         });
 
+map.on('mousemove', function (e) {
+  if (map.getPitch() > 0) 
+    map.setLayoutProperty('3d-buildings','visibility','visible'),
+    map.setLayoutProperty('buildings-13ut9s','visibility','none');  
+  else 
+    map.setLayoutProperty('3d-buildings','visibility','none'),
+    map.setLayoutProperty('buildings-13ut9s','visibility','visible');
+  }
+);
+
+this.map.on('touchstart', function(data) {
+   if (data.points.length == 2) {
+      var diff = Math.abs(data.points[0].y - data.points[1].y);
+      if (diff <= 50) {
+         data.originalEvent.preventDefault();   //prevent browser refresh on pull down
+         self.map.touchZoomRotate.disable();    //disable native touch controls
+         self.map.dragPan.disable();
+         self.dpPoint = data.point;
+         self.dpPitch = self.map.getPitch();
+      }
+   }
+});
+
+map.on('touchmove', function (e) {
+  if (map.getPitch() > 0) 
+    map.setLayoutProperty('3d-buildings','visibility','visible'),
+    map.setLayoutProperty('buildings-13ut9s','visibility','none');  
+  else 
+    map.setLayoutProperty('3d-buildings','visibility','none'),
+    map.setLayoutProperty('buildings-13ut9s','visibility','visible');
+  }
+);
+
+this.map.on('touchmove', function(data) {
+   if (self.dpPoint) {
+      data.preventDefault(); 
+      data.originalEvent.preventDefault();
+      var diff = (self.dpPoint.y - data.point.y) * 0.5;
+      self.map.setPitch(self.dpPitch + diff);
+   };
+});
+
+this.map.on('touchend', function(data) {
+    if (self.dpPoint){
+      self.map.touchZoomRotate.enable();
+      self.map.dragPan.enable();
+   }
+   self.dpPoint = null;
+});
+
+this.map.on('touchcancel', function(data) {   
+   if (self.dpPoint){
+      self.map.touchZoomRotate.enable();
+      self.map.dragPan.enable();
+   }
+   self.dpPoint = null;
+}); 
 </script>
  
 </body>
