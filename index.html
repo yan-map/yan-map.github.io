@@ -547,6 +547,12 @@ map.on('click', 'ДКР', function (e) { popup.setLngLat(e.lngLat)
 .setHTML('<h3>'+e.features[0].properties.Year+' | '+e.features[0].properties.Name+'</h3>')
 .addTo(map);
 });
+
+map.on('click', 'bridges-1aqn6e', function (e) { popup.setLngLat(e.lngLat)
+.setHTML('<h3>'+e.features[0].properties.status+'</h3>')
+.addTo(map);
+});
+
 // Change the cursor to a pointer when the mouse is over the places layer.
 map.on('mouseenter', 'ДКР', function () {
 map.getCanvas().style.cursor = 'pointer';
