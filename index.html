@@ -19,9 +19,15 @@ body { margin:0; padding:0; }
  <style>
 .geocoder {
 	position:absolute;
-	left: 10px;
+  width: 98%;
+	left: 2%;
 	top: 13px;
 } 
+.mapboxgl-ctrl-geocoder{
+font-family: 'Ubuntu Mono', monospace;
+border-radius: 24px;
+width: 98%;
+}
 
 #menu {
 display: button;
@@ -29,7 +35,7 @@ position: absolute;
 z-index: 1;
 bottom: 20px; 
 right: 7px;
-font-family: Arial, Helvetica, sans-serif;
+font-family: 'Ubuntu Mono', monospace;
 font-weight: bold;
 }
  
@@ -81,6 +87,7 @@ minZoom: 2,
 zoom: 10,
 bearingSnap: 30,
 doubleClickZoom: false,
+antialias: true,
 maxBounds: [
 [36.5401693241436050, 55.0203058196276160], // Southwest coordinates
 [38.3135420226066969, 56.1505434064830737]  // Northeast coordinates
@@ -478,15 +485,10 @@ return memo;
  
 map.setFilter("ngpt-highlighted", filter);
 map.setFilter("text-highlighted", filter);
-map.setLayoutProperty('metro-lines','visibility','none');
-map.setLayoutProperty('metro-lines-constructing','visibility','none');
-map.setLayoutProperty('MCC copy','visibility','none');
-map.setLayoutProperty('MCC','visibility','none');
-map.setLayoutProperty('MCD-lines','visibility','none');
-map.setLayoutProperty('metro-lines-copy','visibility','visible');
-map.setLayoutProperty('metro-lines-constructing copy','visibility','visible');
-map.setLayoutProperty('MCC copy 1','visibility','visible');
-map.setLayoutProperty('MCD-lines copy 1','visibility','visible');
+map.setPaintProperty('metro-lines','line-color','#444');
+map.setPaintProperty('metro-lines-constructing','line-color','#444');
+map.setPaintProperty('MCC','line-color','#444');
+map.setPaintProperty('MCD-lines','line-color','#444');
 map.setLayoutProperty('ngpt-pass','visibility','visible');
 map.setLayoutProperty('ngpt-pass-text','visibility','visible');
 });
@@ -495,15 +497,24 @@ map.setLayoutProperty('ngpt-pass-text','visibility','visible');
 popup.on('close', function(e) {
 map.setFilter("ngpt-highlighted", ["in", "fid", ""]);
 map.setFilter("text-highlighted", ["in", "fid", ""]);
-map.setLayoutProperty('metro-lines','visibility','visible');
-map.setLayoutProperty('metro-lines-constructing','visibility','visible');
-map.setLayoutProperty('MCC copy','visibility','visible');
-map.setLayoutProperty('MCC','visibility','visible');
-map.setLayoutProperty('MCD-lines','visibility','visible');
-map.setLayoutProperty('metro-lines-copy','visibility','none');
-map.setLayoutProperty('metro-lines-constructing copy','visibility','none');
-map.setLayoutProperty('MCC copy 1','visibility','none');
-map.setLayoutProperty('MCD-lines copy 1','visibility','none');
+map.setPaintProperty('metro-lines','line-color',["get", "colour"]);
+map.setPaintProperty('metro-lines-constructing','line-color',["get", "colour"]);
+map.setPaintProperty('MCC','line-color','"#ef1f26"');
+map.setPaintProperty('MCD-lines','line-color',[
+  "interpolate",
+  ["linear"],
+  ["get", "MCD"],
+  1,
+  "hsl(37, 97%, 55%)",
+  2,
+  "hsl(338, 84%, 62%)",
+  3,
+  "hsl(19, 88%, 54%)",
+  4,
+  "hsl(158, 53%, 48%)",
+  5,
+  "hsl(98, 49%, 51%)"
+]);
 map.setLayoutProperty('ngpt-pass','visibility','none');
 map.setLayoutProperty('ngpt-pass-text','visibility','none');
 map.setPaintProperty('🛠 ППТ','fill-color','hsla(224, 32%, 51%, 0.2)');
