@@ -256,8 +256,7 @@ url: 'mapbox://yanpogutsa.dp8fgjzc'
 "symbol-placement": "line",
 "text-offset": [0, 1],
 "text-font": [
-  "DIN Offc Pro Medium",
-  "Arial Unicode MS Regular"
+  "Ubuntu Mono Regular"
 ]
 },
 "paint": {
@@ -356,11 +355,10 @@ url: 'mapbox://yanpogutsa.4f2h0yzc'
   1,
   ["literal", [0, 1]],
   11832,
-  ["literal", [0, 5]]
+  ["literal", [0, 8]]
 ],
 "text-font": [
-  "DIN Offc Pro Medium",
-  "Arial Unicode MS Regular"
+  "Ubuntu Mono Regular"
 ],
 "icon-allow-overlap": true,
 "icon-ignore-placement": true,
@@ -408,9 +406,92 @@ url: 'mapbox://yanpogutsa.4f2h0yzc'
 "minzoom": 13
 },'places-5y0blc');
  // Place polygon under these labels.
- // Place polygon under these labels.
+map.addLayer({
+"id": "metro-pass",
+"type": "circle",
+"source": {
+"type": "geojson",
+"data": "./data/Metro-load-lite.json"
+},
+"layout": {
+  "visibility": "none"
+},
+"paint": {
+"circle-color": "hsla(4, 86%, 53%, 0.2)",
+"circle-radius": [
+  "interpolate",
+  [
+    "cubic-bezier",
+    0.3,
+    1,
+    1,
+    1
+  ],
+  [
+    "get",
+    "Average"
+  ],
+  0,
+  15,
+  90000,
+  80
+]
+},
+"minzoom":13
+});
+
+map.addLayer({
+"id": "metro-pass-text",
+"type": "symbol",
+"source": {
+"type": "geojson",
+"data": "./data/Metro-load-lite.json"
+},
+"layout": {
+  "visibility": "none",
+"text-field": [
+  "to-string",
+  [
+    "get",
+    "Average"
+  ]
+],
+"text-size": 8,
+"symbol-placement": "point",
+"text-offset": [
+  "interpolate",
+  [
+    "cubic-bezier",
+    0.3,
+    1,
+    1,
+    1
+  ],
+  [
+    "get",
+    "Average"
+  ],
+  1,
+  ["literal", [0, 1]],
+  90000,
+  ["literal", [0, 8]]
+],
+"text-font": [
+  "Ubuntu Mono Regular"
+],
+"icon-allow-overlap": true,
+"icon-ignore-placement": true,
+},
+"paint": {
+"text-color": "hsla(4, 86%, 53%, 1)",
+"text-halo-color":"hsla(0, 0%, 100%, 0.5)",
+"text-halo-width": 1
+},
+"minzoom": 13
+});
 
 });
+
 var toggleableLayerIds = [ '🛠 ППТ','ППТ','ДКР','🗺' ];
  
 for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -440,6 +521,24 @@ map.setLayoutProperty(clickedLayer, 'visibility', 'none');
 var layers = document.getElementById('menu');
 layers.appendChild(link);
 };
+
+map.on('click', 'metro-stations-close', function (e) {popup.setLngLat(e.lngLat)
+.setHTML('<h3>'+e.features[0].properties.NameOfStation+' Вход №'+e.features[0].properties.ref+'</h3>'+'<p>' + e.features[0].properties.line + '</p>')
+.addTo(map);
+map.setLayoutProperty('metro-pass','visibility','visible');
+map.setLayoutProperty('metro-pass-text','visibility','visible');
+});
+
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'metro-stations-close', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'metro-stations-close', function () {
+map.getCanvas().style.cursor = '';
+});
+
 
 
 map.on('click', 'MCD_stations', function (e) {
@@ -499,7 +598,7 @@ map.setFilter("ngpt-highlighted", ["in", "fid", ""]);
 map.setFilter("text-highlighted", ["in", "fid", ""]);
 map.setPaintProperty('metro-lines','line-color',["get", "colour"]);
 map.setPaintProperty('metro-lines-constructing','line-color',["get", "colour"]);
-map.setPaintProperty('MCC','line-color','"#ef1f26"');
+map.setPaintProperty('MCC','line-color','#ef1f26');
 map.setPaintProperty('MCD-lines','line-color',[
   "interpolate",
   ["linear"],
@@ -517,6 +616,8 @@ map.setPaintProperty('MCD-lines','line-color',[
 ]);
 map.setLayoutProperty('ngpt-pass','visibility','none');
 map.setLayoutProperty('ngpt-pass-text','visibility','none');
+map.setLayoutProperty('metro-pass','visibility','none');
+map.setLayoutProperty('metro-pass-text','visibility','none');
 map.setPaintProperty('🛠 ППТ','fill-color','hsla(224, 32%, 51%, 0.2)');
 map.setPaintProperty('ППТ','fill-color','hsla(0, 100%, 33%, 0.2)');
 map.setFilter("🛠 ППТ", undefined); //["in", "REG_NUM", ""]);
@@ -647,6 +748,7 @@ this.map.on('touchcancel', function(data) {
    }
    self.dpPoint = null;
 }); 
+
 </script>
  
 </body>
