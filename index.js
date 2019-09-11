@@ -167,7 +167,21 @@ map.on("load", function() {
     },
     "buildings-13ut9s"
   );
-
+  map.addLayer({
+    id: "isoText",
+    type: "symbol",
+    source: "isoSource",
+    paint: {
+      "text-color": "#ef4c89",
+      "text-halo-color": "hsla(0, 0%, 100%, 0.5)",
+      "text-halo-width": 1.5
+    },
+    layout: {
+      "text-field": ["concat", ["get", "population_rs"], " чел."],
+      "text-font": ["Ubuntu Mono Regular"],
+      "text-size": 8
+    }
+  });
   map.addLayer({
     id: "isoLine",
     type: "line",
