@@ -15,6 +15,10 @@ var map = new mapboxgl.Map({
     [38.3135420226066969, 56.1505434064830737] // Northeast coordinates
   ]
 });
+const c0 = "#006ff7";
+const c1 = "#484848";
+const c2 = "#ffc33c";
+const c3 = "#ff5575";
 let dataNull = {
   type: "FeatureCollection",
   features: [
@@ -44,6 +48,10 @@ map.loadImage("./data/pattern.png", function(err, image) {
 });
 ///////////////////////LOAD
 map.on("load", function() {
+  map.addSource("routes", {
+    type: "vector",
+    url: "mapbox://yanpogutsa.dna92ft5"
+  });
   map.addLayer(
     {
       id: "3d-buildings",
@@ -167,6 +175,7 @@ map.on("load", function() {
     },
     "buildings-13ut9s"
   );
+
   map.addLayer({
     id: "isoText",
     type: "symbol",
@@ -182,6 +191,7 @@ map.on("load", function() {
       "text-size": 8
     }
   });
+
   map.addLayer({
     id: "isoLine",
     type: "line",
@@ -195,87 +205,6 @@ map.on("load", function() {
   });
 
   ///////////////////////////////////////ROUTE
-  map.addLayer(
-    {
-      id: "ngpt-highlighted",
-      type: "line",
-      source: {
-        type: "vector",
-        url: "mapbox://yanpogutsa.dna92ft5"
-      },
-      "source-layer": "NGPT-routes-spt-dhbz68",
-      filter: ["in", "route", ""],
-      layout: {
-        "line-join": "round",
-        "line-cap": "round"
-      },
-      paint: {
-        "line-color": [
-          "interpolate",
-          ["linear"],
-          ["get", "fid"],
-          1,
-          "#006ff7",
-          743,
-          "#484848",
-          1486,
-          "#ffc33c",
-          2229,
-          "#ff5575"
-        ],
-        "line-width": 2,
-        "line-dasharray": [2, 1],
-        "line-offset": [
-          "interpolate",
-          ["linear"],
-          ["get", "fid"],
-          1,
-          0,
-          2229,
-          6
-        ]
-      },
-      minZoom: 10
-    },
-    "places-5y0blc"
-  );
-
-  map.addLayer(
-    {
-      id: "text-highlighted",
-      type: "symbol",
-      source: {
-        type: "vector",
-        url: "mapbox://yanpogutsa.dna92ft5"
-      },
-      "source-layer": "NGPT-routes-spt-dhbz68",
-      filter: ["in", "route", ""],
-      layout: {
-        "text-field": ["to-string", ["get", "route"]],
-        "text-size": 8,
-        "symbol-placement": "line",
-        "text-offset": [0, 1],
-        "text-font": ["Ubuntu Mono Regular"]
-      },
-      paint: {
-        "text-color": [
-          "interpolate",
-          ["linear"],
-          ["get", "fid"],
-          1,
-          "#006ff7",
-          743,
-          "#484848",
-          1486,
-          "#ffc33c",
-          2229,
-          "#ff5575"
-        ]
-      },
-      minZoom: 10
-    },
-    "places-5y0blc"
-  );
 
   map.addLayer(
     {
@@ -551,14 +480,79 @@ map.on("click", "places-5y0blc", function(e) {
     ["in", "fid"]
   );
 
-  map.setFilter("ngpt-highlighted", routeFix);
-  map.setFilter("text-highlighted", routeFix);
   map.setPaintProperty("metro-lines", "line-color", "#444");
   map.setPaintProperty("metro-lines-constructing", "line-color", "#444");
   map.setPaintProperty("MCC", "line-color", "#444");
   map.setPaintProperty("MCD-lines", "line-color", "#444");
   map.setLayoutProperty("ngpt-pass", "visibility", "visible");
   map.setLayoutProperty("ngpt-pass-text", "visibility", "visible");
+  var routesCount = routeFix.length - 2;
+  for (var i = 0; i < routesCount; i++) {
+    let name = "n" + [i];
+    let routeColors = [
+      c0,
+      c1,
+      c2,
+      c3,
+      c0,
+      c1,
+      c2,
+      c3,
+      c0,
+      c1,
+      c2,
+      c3,
+      c0,
+      c1,
+      c2,
+      c3,
+      c0,
+      c1,
+      c2,
+      c3
+    ];
+
+    map.addLayer(
+      {
+        id: name,
+        type: "line",
+        source: "routes",
+        "source-layer": "NGPT-routes-spt-dhbz68",
+        filter: ["in", "route", routeFix[i + 2]],
+        paint: {
+          "line-color": routeColors[i],
+          "line-opacity": 0.85,
+          "line-width": 1.5,
+          "line-dasharray": [2, 1],
+          "line-offset": 2 * i
+        }
+      },
+      "places-5y0blc"
+    );
+    map.addLayer(
+      {
+        id: "t" + name,
+        type: "symbol",
+        source: "routes",
+        "source-layer": "NGPT-routes-spt-dhbz68",
+        filter: ["in", "route", routeFix[i + 2]],
+        layout: {
+          "text-field": ["to-string", ["get", "route"]],
+          "text-size": 7,
+          "symbol-placement": "line",
+          "text-allow-overlap": true,
+          "text-offset": [0, i],
+          "text-font": ["Ubuntu Mono Bold"]
+        },
+        paint: {
+          "text-color": routeColors[i],
+          "text-halo-width": 2,
+          "text-halo-color": "#fff"
+        }
+      },
+      "places-5y0blc"
+    );
+  }
 });
 // Change the cursor to a pointer when the mouse is over the places layer.
 map.on("mouseenter", "places-5y0blc", function() {
@@ -572,8 +566,10 @@ map.on("mouseleave", "places-5y0blc", function() {
 //map.on('click', 'ngpt-highlighted', function(e) {
 // set bbox as 5px reactangle area around clicked point
 popup.on("close", function(e) {
-  map.setFilter("ngpt-highlighted", ["in", "route", ""]);
-  map.setFilter("text-highlighted", ["in", "route", ""]);
+  for (var i = 0; i < 20; i++) {
+    map.removeLayer("n" + [i]);
+    map.removeLayer("tn" + [i]);
+  }
   map.setPaintProperty("metro-lines", "line-color", ["get", "colour"]);
   map.setPaintProperty("metro-lines-constructing", "line-color", [
     "get",
