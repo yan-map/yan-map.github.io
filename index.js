@@ -480,10 +480,10 @@ map.on("click", "places-5y0blc", function(e) {
     ["in", "fid"]
   );
 
-  map.setPaintProperty("metro-lines", "line-color", "#444");
-  map.setPaintProperty("metro-lines-constructing", "line-color", "#444");
-  map.setPaintProperty("MCC", "line-color", "#444");
-  map.setPaintProperty("MCD-lines", "line-color", "#444");
+  map.setPaintProperty("metro-lines", "line-color", "#666");
+  map.setPaintProperty("metro-lines-constructing", "line-color", "#666");
+  map.setPaintProperty("MCC", "line-color", "#666");
+  map.setPaintProperty("MCD-lines", "line-color", "#666");
   map.setLayoutProperty("ngpt-pass", "visibility", "visible");
   map.setLayoutProperty("ngpt-pass-text", "visibility", "visible");
   var routesCount = routeFix.length - 2;
