@@ -546,7 +546,7 @@ map.on("click", "places-5y0blc", function(e) {
         },
         paint: {
           "text-color": routeColors[i],
-          "text-halo-width": 2,
+          "text-halo-width": 1,
           "text-halo-color": "#fff"
         }
       },
