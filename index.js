@@ -76,38 +76,59 @@ map.on("load", function() {
     "housenum-label"
   );
 
+  map.addSource("DKR_poly", {
+    type: "vector",
+    url: "mapbox://yanpogutsa.2wygw0t6"
+  });
   map.addLayer(
     {
       id: "ДКР",
-      type: "line",
-      source: {
-        type: "vector",
-        url: "mapbox://yanpogutsa.0p9ye6kw"
-      },
-      "source-layer": "l_blag-a9ug8y",
-      filter: ["all", ["match", ["get", "Year"], [9999], false, true]],
+      type: "fill",
+      source: "DKR_poly",
+      "source-layer": "DKR-draft-8xh91k",
       layout: {
-        visibility: "none",
-        "line-cap": "butt",
-        "line-join": "round"
+        visibility: "none"
       },
       paint: {
-        "line-opacity": 0.5,
-        "line-color": [
+        "fill-color": [
           "case",
-          [">=", ["get", "Year"], 2019],
-          "#3cbe66",
-          "hsl(324, 16%, 34%)"
+          ["==", ["get", "yearTitle"], "2011-2018"],
+          "hsl(324, 16%, 34%)",
+          "#3cbe66"
         ],
-        "line-width": ["interpolate", ["linear"], ["zoom"], 11, 2, 22, 30]
+        "fill-outline-color": "#3cbe66",
+        "fill-opacity": 0.4
       }
     },
     "admin-2-boundary"
-  ); // Place polygon under these labels.
+  );
+  map.addLayer(
+    {
+      id: "DKR_draft_line",
+      type: "line",
+      source: "DKR_poly",
+      "source-layer": "DKR-draft-8xh91k",
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        "line-color": [
+          "case",
+          ["==", ["get", "yearTitle"], "2011-2018"],
+          "hsl(324, 16%, 34%)",
+          "#3cbe66"
+        ],
+        "line-width": 1.5,
+        "line-offset": -0.75,
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0.5, 14, 0]
+      }
+    },
+    "admin-2-boundary"
+  );
 
   map.addLayer(
     {
-      id: "🛠 ППТ",
+      id: "⚙ ППТ",
       type: "fill",
       source: {
         type: "vector",
@@ -331,34 +352,98 @@ map.on("load", function() {
   });
 });
 
-var toggleableLayerIds = ["🛠 ППТ", "ППТ", "ДКР", "🗺"];
+function toggleTab(e, tabName) {
+  //var tabName = e.currentTarget.textContent;
+  var tabcontent = document.getElementsByClassName("tabcontent");
+  for (var i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
 
-for (var i = 0; i < toggleableLayerIds.length; i++) {
-  var id = toggleableLayerIds[i];
+  var visibility = map.getLayoutProperty(tabName, "visibility");
 
-  var link = document.createElement("a");
-  link.href = "#";
-  link.className = "active";
-  link.textContent = id;
+  if (visibility === "visible") {
+    map.setLayoutProperty(tabName, "visibility", "none");
+    e.currentTarget.className = "";
+    document.getElementById(tabName).style.display = "none";
+  } else {
+    map.setLayoutProperty(tabName, "visibility", "visible");
+    e.currentTarget.className = " active";
+    document.getElementById(tabName).style.display = "block";
+  }
+}
 
-  link.onclick = function(e) {
-    var clickedLayer = this.textContent;
-    e.preventDefault();
-    e.stopPropagation();
+function toggleDKR(e, tabName) {
+  //var tabName = e.currentTarget.textContent;
+  var tabcontent = document.getElementsByClassName("tabcontent");
+  for (var i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
 
-    var visibility = map.getLayoutProperty(clickedLayer, "visibility");
+  var visibility = map.getLayoutProperty(tabName, "visibility");
 
-    if (visibility === "none") {
-      map.setLayoutProperty(clickedLayer, "visibility", "visible");
-      this.className = "";
-    } else {
-      this.className = "active";
-      map.setLayoutProperty(clickedLayer, "visibility", "none");
+  if (visibility === "visible") {
+    map.setLayoutProperty(tabName, "visibility", "none");
+    map.setLayoutProperty("DKR_draft_line", "visibility", "none");
+    e.currentTarget.className = "";
+    document.getElementById(tabName).style.display = "none";
+  } else {
+    map.setLayoutProperty(tabName, "visibility", "visible");
+    map.setLayoutProperty("DKR_draft_line", "visibility", "visible");
+    e.currentTarget.className = " active";
+    document.getElementById(tabName).style.display = "block";
+  }
+}
+
+function toggleLayer(e, buttonName) {
+  var visibility = map.getLayoutProperty(buttonName, "visibility");
+  if (visibility === "visible") {
+    map.setLayoutProperty(buttonName, "visibility", "none");
+    e.currentTarget.className = "";
+  } else {
+    map.setLayoutProperty(buttonName, "visibility", "visible");
+    e.currentTarget.className = " active";
+  }
+}
+
+var Filter = ["in", "layer"];
+
+function tabFilter(e, clickedFilter) {
+  var targetLayer = e.target.parentElement.id;
+
+  if (e.currentTarget.className == "") {
+    Filter.push(clickedFilter);
+    e.currentTarget.className = " active";
+  } else {
+    for (var i = 0; i < Filter.length; i++) {
+      if (Filter[i] == clickedFilter) {
+        Filter.splice(i, 1);
+      }
     }
-  };
+    e.currentTarget.className = "";
+  }
+  map.setFilter(targetLayer, Filter);
+}
 
-  var layers = document.getElementById("menu");
-  layers.appendChild(link);
+var dateFilter = ["in", "yearTitle"];
+
+function tabFilterYear(e) {
+  var date = e.currentTarget.textContent;
+  //var date = parseInt(dateRaw,10);
+  var targetLayer = e.target.parentElement.id;
+
+  if (e.currentTarget.className == "") {
+    dateFilter.push(date);
+    e.currentTarget.className = " active";
+  } else {
+    for (var i = 0; i < dateFilter.length; i++) {
+      if (dateFilter[i] == date) {
+        dateFilter.splice(i, 1);
+      }
+    }
+    e.currentTarget.className = "";
+  }
+  map.setFilter(targetLayer, dateFilter);
+  map.setFilter("DKR_draft_line", dateFilter);
 }
 
 map.on("click", "metro-stations-close", function(e) {
