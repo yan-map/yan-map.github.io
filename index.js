@@ -410,12 +410,12 @@ var Filter = ["in", "layer"];
 function tabFilter(e, clickedFilter) {
   var targetLayer = e.target.parentElement.id;
 
-  if (e.currentTarget.className == "") {
+  if (e.currentTarget.className === "") {
     Filter.push(clickedFilter);
     e.currentTarget.className = " active";
   } else {
     for (var i = 0; i < Filter.length; i++) {
-      if (Filter[i] == clickedFilter) {
+      if (Filter[i] === clickedFilter) {
         Filter.splice(i, 1);
       }
     }
@@ -431,12 +431,12 @@ function tabFilterYear(e) {
   //var date = parseInt(dateRaw,10);
   var targetLayer = e.target.parentElement.id;
 
-  if (e.currentTarget.className == "") {
+  if (e.currentTarget.className === "") {
     dateFilter.push(date);
     e.currentTarget.className = " active";
   } else {
     for (var i = 0; i < dateFilter.length; i++) {
-      if (dateFilter[i] == date) {
+      if (dateFilter[i] === date) {
         dateFilter.splice(i, 1);
       }
     }
@@ -803,12 +803,13 @@ map.on("dblclick", function windowOpen(e) {
 });
 
 map.on("mousemove", function(e) {
-  if (map.getPitch() > 0)
-    map.setLayoutProperty("3d-buildings", "visibility", "visible"),
-      map.setLayoutProperty("buildings-13ut9s", "visibility", "none");
-  else
-    map.setLayoutProperty("3d-buildings", "visibility", "none"),
-      map.setLayoutProperty("buildings-13ut9s", "visibility", "visible");
+  if (map.getPitch() > 0) {
+    map.setLayoutProperty("3d-buildings", "visibility", "visible");
+    map.setLayoutProperty("buildings-13ut9s", "visibility", "none");
+  } else {
+    map.setLayoutProperty("3d-buildings", "visibility", "none");
+    map.setLayoutProperty("buildings-13ut9s", "visibility", "visible");
+  }
 });
 
 map.on("touchstart", function(data) {
@@ -825,12 +826,13 @@ map.on("touchstart", function(data) {
 });
 
 map.on("touchmove", function(e) {
-  if (map.getPitch() > 0)
-    map.setLayoutProperty("3d-buildings", "visibility", "visible"),
-      map.setLayoutProperty("buildings-13ut9s", "visibility", "none");
-  else
-    map.setLayoutProperty("3d-buildings", "visibility", "none"),
-      map.setLayoutProperty("buildings-13ut9s", "visibility", "visible");
+  if (map.getPitch() > 0) {
+    map.setLayoutProperty("3d-buildings", "visibility", "visible");
+    map.setLayoutProperty("buildings-13ut9s", "visibility", "none");
+  } else {
+    map.setLayoutProperty("3d-buildings", "visibility", "none");
+    map.setLayoutProperty("buildings-13ut9s", "visibility", "visible");
+  }
 });
 
 map.on("touchmove", function(data) {
