@@ -681,10 +681,10 @@ popup.on("close", function(e) {
   map.setLayoutProperty("ngpt-pass-text", "visibility", "none");
   map.setLayoutProperty("metro-pass", "visibility", "none");
   map.setLayoutProperty("metro-pass-text", "visibility", "none");
-  map.setPaintProperty("⚙ ППТ", "fill-color", "hsla(224, 32%, 51%, 0.2)");
-  map.setPaintProperty("ППТ", "fill-color", "hsla(0, 100%, 33%, 0.2)");
-  map.setFilter("⚙ ППТ", undefined); //["in", "REG_NUM", ""]);
-  map.setFilter("ППТ", undefined); //["in", "REG_NUM", ""]);
+  //map.setPaintProperty("⚙ ППТ", "fill-color", "hsla(224, 32%, 51%, 0.2)");
+  //map.setPaintProperty("ППТ", "fill-color", "hsla(0, 100%, 33%, 0.2)");
+  //map.setFilter("⚙ ППТ", undefined); //["in", "REG_NUM", ""]);
+  //map.setFilter("ППТ", undefined); //["in", "REG_NUM", ""]);
   map.getSource("isoSource").setData(dataNull);
 });
 ///////////////////////////
@@ -706,9 +706,9 @@ map.on("click", "⚙ ППТ", function(e) {
         "</p>"
     )
     .addTo(map);
-  var feature = e.features[0];
-  map.setFilter("⚙ ППТ", ["in", "REG_NUM", feature.properties.REG_NUM]);
-  map.setPaintProperty("⚙ ППТ", "fill-color", "hsla(224, 32%, 51%, 0.7)");
+  //var feature = e.features[0];
+  //map.setFilter("⚙ ППТ", ["in", "REG_NUM", feature.properties.REG_NUM]);
+  //map.setPaintProperty("⚙ ППТ", "fill-color", "hsla(224, 32%, 51%, 0.7)");
 });
 // Change the cursor to a pointer when the mouse is over the places layer.
 map.on("mouseenter", "⚙ ППТ", function() {
@@ -736,9 +736,9 @@ map.on("click", "ППТ", function(e) {
         "</p>"
     )
     .addTo(map);
-  var feature = e.features[0];
-  map.setFilter("ППТ", ["in", "REG_NUM", feature.properties.REG_NUM]);
-  map.setPaintProperty("ППТ", "fill-color", "hsla(0, 100%, 33%, 0.7)");
+  //var feature = e.features[0];
+  //map.setFilter("ППТ", ["in", "REG_NUM", feature.properties.REG_NUM]);
+  //map.setPaintProperty("ППТ", "fill-color", "hsla(0, 100%, 33%, 0.7)");
 });
 // Change the cursor to a pointer when the mouse is over the places layer.
 map.on("mouseenter", "ППТ", function() {
