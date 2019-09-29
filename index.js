@@ -566,10 +566,10 @@ map.on("click", "places-5y0blc", function(e) {
     ["in", "fid"]
   );
 
-  map.setPaintProperty("metro-lines", "line-color", "#666");
-  map.setPaintProperty("metro-lines-constructing", "line-color", "#666");
-  map.setPaintProperty("MCC", "line-color", "#666");
-  map.setPaintProperty("MCD-lines", "line-color", "#666");
+  map.setPaintProperty("metro-lines", "line-color", "#888");
+  map.setPaintProperty("metro-lines-constructing", "line-color", "#888");
+  map.setPaintProperty("MCC", "line-color", "#888");
+  map.setPaintProperty("MCD-lines", "line-color", "#888");
   map.setLayoutProperty("ngpt-pass", "visibility", "visible");
   map.setLayoutProperty("ngpt-pass-text", "visibility", "visible");
   var routesCount = routeFix.length - 2;
@@ -681,14 +681,14 @@ popup.on("close", function(e) {
   map.setLayoutProperty("ngpt-pass-text", "visibility", "none");
   map.setLayoutProperty("metro-pass", "visibility", "none");
   map.setLayoutProperty("metro-pass-text", "visibility", "none");
-  map.setPaintProperty("🛠 ППТ", "fill-color", "hsla(224, 32%, 51%, 0.2)");
+  map.setPaintProperty("⚙ ППТ", "fill-color", "hsla(224, 32%, 51%, 0.2)");
   map.setPaintProperty("ППТ", "fill-color", "hsla(0, 100%, 33%, 0.2)");
-  map.setFilter("🛠 ППТ", undefined); //["in", "REG_NUM", ""]);
+  map.setFilter("⚙ ППТ", undefined); //["in", "REG_NUM", ""]);
   map.setFilter("ППТ", undefined); //["in", "REG_NUM", ""]);
   map.getSource("isoSource").setData(dataNull);
 });
 ///////////////////////////
-map.on("click", "🛠 ППТ", function(e) {
+map.on("click", "⚙ ППТ", function(e) {
   popup
     .setLngLat(e.lngLat)
     .setHTML(
@@ -707,15 +707,15 @@ map.on("click", "🛠 ППТ", function(e) {
     )
     .addTo(map);
   var feature = e.features[0];
-  map.setFilter("🛠 ППТ", ["in", "REG_NUM", feature.properties.REG_NUM]);
-  map.setPaintProperty("🛠 ППТ", "fill-color", "hsla(224, 32%, 51%, 0.7)");
+  map.setFilter("⚙ ППТ", ["in", "REG_NUM", feature.properties.REG_NUM]);
+  map.setPaintProperty("⚙ ППТ", "fill-color", "hsla(224, 32%, 51%, 0.7)");
 });
 // Change the cursor to a pointer when the mouse is over the places layer.
-map.on("mouseenter", "🛠 ППТ", function() {
+map.on("mouseenter", "⚙ ППТ", function() {
   map.getCanvas().style.cursor = "pointer";
 });
 // Change it back to a pointer when it leaves.
-map.on("mouseleave", "🛠 ППТ", function() {
+map.on("mouseleave", "⚙ ППТ", function() {
   map.getCanvas().style.cursor = "";
 });
 map.on("click", "ППТ", function(e) {
@@ -756,7 +756,9 @@ map.on("click", "ДКР", function(e) {
       "<h3>" +
         e.features[0].properties.Year +
         " | " +
-        e.features[0].properties.Name +
+        e.features[0].properties.NAM_STR +
+        " | " +
+        e.features[0].properties.Type +
         "</h3>"
     )
     .addTo(map);
