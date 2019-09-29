@@ -11,6 +11,7 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css' type='text/css' />
 <link rel='stylesheet' href='./data/styles.css' type='text/css' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 body { margin:0; padding:0; }
 #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -62,13 +63,13 @@ body { margin:0; padding:0; }
   <button onclick="tabFilterYear(event)">2022</button>
   <button onclick="tabFilterYear(event)">2023</button>
 </div>
-  <buttoni class="tablinks" onclick="toggleTab(event, '⚙ ППТ')">⚙ ППТ</buttoni>
+  <buttoni class="tablinks" onclick="toggleTab(event, '⚙ ППТ')"><i class="fa fa-wrench" aria-hidden="true"></i> ППТ</buttoni>
   <button class="tablinks" onclick="toggleTab(event, 'ППТ')">ППТ</button>
   <button class="tablinks" onclick="toggleDKR(event, 'ДКР')">ДКР</button>
-  <button class="tablinks" onclick="toggleLayer(event, '🗺')">🗺</button>
+  <button class="tablinks" onclick="toggleLayer(event, '🗺')"><i class="fa fa-map" aria-hidden="true"></i></button>
 </div>
  
-<script src="index.js"></script>
+<script src="index.js" async></script>
  
 </body>
 </html>
