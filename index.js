@@ -46,6 +46,101 @@ map.loadImage("./data/pattern.png", function(err, image) {
   // Declare the image
   map.addImage("pattern", image);
 });
+
+function toggleTab(e, tabName) {
+  //var tabName = e.currentTarget.textContent;
+  var tabcontent = document.getElementsByClassName("tabcontent");
+  for (var i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  var visibility = map.getLayoutProperty(tabName, "visibility");
+
+  if (visibility === "visible") {
+    map.setLayoutProperty(tabName, "visibility", "none");
+    e.currentTarget.className = "";
+    document.getElementById(tabName).style.display = "none";
+  } else {
+    map.setLayoutProperty(tabName, "visibility", "visible");
+    e.currentTarget.className = " active";
+    document.getElementById(tabName).style.display = "block";
+  }
+}
+
+function toggleDKR(e, tabName) {
+  //var tabName = e.currentTarget.textContent;
+  var tabcontent = document.getElementsByClassName("tabcontent");
+  for (var i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  var visibility = map.getLayoutProperty(tabName, "visibility");
+
+  if (visibility === "visible") {
+    map.setLayoutProperty(tabName, "visibility", "none");
+    map.setLayoutProperty("DKR_draft_line", "visibility", "none");
+    e.currentTarget.className = "";
+    document.getElementById(tabName).style.display = "none";
+  } else {
+    map.setLayoutProperty(tabName, "visibility", "visible");
+    map.setLayoutProperty("DKR_draft_line", "visibility", "visible");
+    e.currentTarget.className = " active";
+    document.getElementById(tabName).style.display = "block";
+  }
+}
+
+function toggleLayer(e, buttonName) {
+  var visibility = map.getLayoutProperty(buttonName, "visibility");
+  if (visibility === "visible") {
+    map.setLayoutProperty(buttonName, "visibility", "none");
+    e.currentTarget.className = "";
+  } else {
+    map.setLayoutProperty(buttonName, "visibility", "visible");
+    e.currentTarget.className = " active";
+  }
+}
+
+var Filter = ["in", "layer"];
+
+function tabFilter(e, clickedFilter) {
+  var targetLayer = e.target.parentElement.id;
+
+  if (e.currentTarget.className === "") {
+    Filter.push(clickedFilter);
+    e.currentTarget.className = " active";
+  } else {
+    for (var i = 0; i < Filter.length; i++) {
+      if (Filter[i] === clickedFilter) {
+        Filter.splice(i, 1);
+      }
+    }
+    e.currentTarget.className = "";
+  }
+  map.setFilter(targetLayer, Filter);
+}
+
+var dateFilter = ["in", "yearTitle"];
+
+function tabFilterYear(e) {
+  var date = e.currentTarget.textContent;
+  //var date = parseInt(dateRaw,10);
+  var targetLayer = e.target.parentElement.id;
+
+  if (e.currentTarget.className === "") {
+    dateFilter.push(date);
+    e.currentTarget.className = " active";
+  } else {
+    for (var i = 0; i < dateFilter.length; i++) {
+      if (dateFilter[i] === date) {
+        dateFilter.splice(i, 1);
+      }
+    }
+    e.currentTarget.className = "";
+  }
+  map.setFilter(targetLayer, dateFilter);
+  map.setFilter("DKR_draft_line", dateFilter);
+}
+
 ///////////////////////LOAD
 map.on("load", function() {
   map.addSource("routes", {
@@ -351,100 +446,6 @@ map.on("load", function() {
     minzoom: 13
   });
 });
-
-function toggleTab(e, tabName) {
-  //var tabName = e.currentTarget.textContent;
-  var tabcontent = document.getElementsByClassName("tabcontent");
-  for (var i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  var visibility = map.getLayoutProperty(tabName, "visibility");
-
-  if (visibility === "visible") {
-    map.setLayoutProperty(tabName, "visibility", "none");
-    e.currentTarget.className = "";
-    document.getElementById(tabName).style.display = "none";
-  } else {
-    map.setLayoutProperty(tabName, "visibility", "visible");
-    e.currentTarget.className = " active";
-    document.getElementById(tabName).style.display = "block";
-  }
-}
-
-function toggleDKR(e, tabName) {
-  //var tabName = e.currentTarget.textContent;
-  var tabcontent = document.getElementsByClassName("tabcontent");
-  for (var i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  var visibility = map.getLayoutProperty(tabName, "visibility");
-
-  if (visibility === "visible") {
-    map.setLayoutProperty(tabName, "visibility", "none");
-    map.setLayoutProperty("DKR_draft_line", "visibility", "none");
-    e.currentTarget.className = "";
-    document.getElementById(tabName).style.display = "none";
-  } else {
-    map.setLayoutProperty(tabName, "visibility", "visible");
-    map.setLayoutProperty("DKR_draft_line", "visibility", "visible");
-    e.currentTarget.className = " active";
-    document.getElementById(tabName).style.display = "block";
-  }
-}
-
-function toggleLayer(e, buttonName) {
-  var visibility = map.getLayoutProperty(buttonName, "visibility");
-  if (visibility === "visible") {
-    map.setLayoutProperty(buttonName, "visibility", "none");
-    e.currentTarget.className = "";
-  } else {
-    map.setLayoutProperty(buttonName, "visibility", "visible");
-    e.currentTarget.className = " active";
-  }
-}
-
-var Filter = ["in", "layer"];
-
-function tabFilter(e, clickedFilter) {
-  var targetLayer = e.target.parentElement.id;
-
-  if (e.currentTarget.className === "") {
-    Filter.push(clickedFilter);
-    e.currentTarget.className = " active";
-  } else {
-    for (var i = 0; i < Filter.length; i++) {
-      if (Filter[i] === clickedFilter) {
-        Filter.splice(i, 1);
-      }
-    }
-    e.currentTarget.className = "";
-  }
-  map.setFilter(targetLayer, Filter);
-}
-
-var dateFilter = ["in", "yearTitle"];
-
-function tabFilterYear(e) {
-  var date = e.currentTarget.textContent;
-  //var date = parseInt(dateRaw,10);
-  var targetLayer = e.target.parentElement.id;
-
-  if (e.currentTarget.className === "") {
-    dateFilter.push(date);
-    e.currentTarget.className = " active";
-  } else {
-    for (var i = 0; i < dateFilter.length; i++) {
-      if (dateFilter[i] === date) {
-        dateFilter.splice(i, 1);
-      }
-    }
-    e.currentTarget.className = "";
-  }
-  map.setFilter(targetLayer, dateFilter);
-  map.setFilter("DKR_draft_line", dateFilter);
-}
 
 map.on("click", "metro-stations-close", function(e) {
   let data =
@@ -777,11 +778,57 @@ map.on("mouseleave", "ДКР", function() {
   map.getCanvas().style.cursor = "";
 });
 
+var coordinatesGeocoder = function(query) {
+  // match anything which looks like a decimal degrees coordinate pair
+  var matches = query.match(
+    /^[ ]*(?:Lat: )?(-?\d+\.?\d*)[, ]+(?:Lng: )?(-?\d+\.?\d*)[ ]*$/i
+  );
+  if (!matches) {
+    return null;
+  }
+
+  function coordinateFeature(lng, lat) {
+    return {
+      center: [lng, lat],
+      geometry: {
+        type: "Point",
+        coordinates: [lng, lat]
+      },
+      place_name: "Lat: " + lat + " Lng: " + lng,
+      place_type: ["coordinate"],
+      properties: {},
+      type: "Feature"
+    };
+  }
+
+  var coord1 = Number(matches[1]);
+  var coord2 = Number(matches[2]);
+  var geocodes = [];
+
+  if (coord1 < -90 || coord1 > 90) {
+    // must be lng, lat
+    geocodes.push(coordinateFeature(coord1, coord2));
+  }
+
+  if (coord2 < -90 || coord2 > 90) {
+    // must be lat, lng
+    geocodes.push(coordinateFeature(coord2, coord1));
+  }
+
+  if (geocodes.length === 0) {
+    // else could be either lng, lat or lat, lng
+    geocodes.push(coordinateFeature(coord1, coord2));
+    geocodes.push(coordinateFeature(coord2, coord1));
+  }
+
+  return geocodes;
+};
+
 var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   mapboxgl: mapboxgl,
   placeholder: "Поиск",
-
+  localGeocoder: coordinatesGeocoder,
   bbox: [
     36.540169324143605,
     55.020305819627616,
