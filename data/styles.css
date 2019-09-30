@@ -141,7 +141,7 @@ p {
   border-radius: 10px;
   border-bottom: 2px solid #fff;
 }
-.tabcontent button:last-child:hover {
+.tabcontent button:last-child.hover {
   padding: 8px;
   background-color: #ff5575;
   color: #fff;
@@ -155,7 +155,7 @@ p {
   border-radius: 10px;
   border-bottom: 2px solid #fff;
 }
-.tabcontent button:last-child:active {
+.tabcontent button:last-child.active {
   background-color: #be2e4b;
   color: #fff;
   border-radius: 10px;
