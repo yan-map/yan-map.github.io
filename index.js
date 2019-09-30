@@ -47,6 +47,22 @@ map.loadImage("./data/pattern.png", function(err, image) {
   map.addImage("pattern", image);
 });
 
+map.loadImage("./data/pattern-blue.png", function(err, image) {
+  // Throw an error if something went wrong
+  if (err) throw err;
+
+  // Declare the image
+  map.addImage("pattern-blue", image);
+});
+
+map.loadImage("./data/pattern-blue-solid.png", function(err, image) {
+  // Throw an error if something went wrong
+  if (err) throw err;
+
+  // Declare the image
+  map.addImage("pattern-blue-solid", image);
+});
+
 function toggleTab(e, tabName) {
   //var tabName = e.currentTarget.textContent;
   var tabcontent = document.getElementsByClassName("tabcontent");
@@ -67,23 +83,22 @@ function toggleTab(e, tabName) {
   }
 }
 
-function toggleDKR(e, tabName) {
+function toggleLayerLine(e, tabName) {
   //var tabName = e.currentTarget.textContent;
   var tabcontent = document.getElementsByClassName("tabcontent");
   for (var i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
   }
-
+  var tabNameLine = tabName+'_line';
   var visibility = map.getLayoutProperty(tabName, "visibility");
-
   if (visibility === "visible") {
     map.setLayoutProperty(tabName, "visibility", "none");
-    map.setLayoutProperty("DKR_draft_line", "visibility", "none");
+    map.setLayoutProperty(tabNameLine, "visibility", "none");
     e.currentTarget.className = "";
     document.getElementById(tabName).style.display = "none";
   } else {
     map.setLayoutProperty(tabName, "visibility", "visible");
-    map.setLayoutProperty("DKR_draft_line", "visibility", "visible");
+    map.setLayoutProperty(tabNameLine, "visibility", "visible");
     e.currentTarget.className = " active";
     document.getElementById(tabName).style.display = "block";
   }
@@ -119,12 +134,32 @@ function tabFilter(e, clickedFilter) {
   map.setFilter(targetLayer, Filter);
 }
 
+function tabFilterLine(e, clickedFilter) {
+  var targetLayer = e.target.parentElement.id;
+  var targetLayerLine = targetLayer+'_line';
+
+  if (e.currentTarget.className === "") {
+    Filter.push(clickedFilter);
+    e.currentTarget.className = " active";
+  } else {
+    for (var i = 0; i < Filter.length; i++) {
+      if (Filter[i] === clickedFilter) {
+        Filter.splice(i, 1);
+      }
+    }
+    e.currentTarget.className = "";
+  }
+  map.setFilter(targetLayer, Filter);
+  map.setFilter(targetLayerLine, Filter);
+}
+
 var dateFilter = ["in", "yearTitle"];
 
 function tabFilterYear(e) {
   var date = e.currentTarget.textContent;
   //var date = parseInt(dateRaw,10);
   var targetLayer = e.target.parentElement.id;
+  var targetLayerLine = targetLayer+'_line';
 
   if (e.currentTarget.className === "") {
     dateFilter.push(date);
@@ -138,7 +173,7 @@ function tabFilterYear(e) {
     e.currentTarget.className = "";
   }
   map.setFilter(targetLayer, dateFilter);
-  map.setFilter("DKR_draft_line", dateFilter);
+  map.setFilter(targetLayerLine, dateFilter);
 }
 
 ///////////////////////LOAD
@@ -197,9 +232,10 @@ map.on("load", function() {
     },
     "admin-2-boundary"
   );
+
   map.addLayer(
     {
-      id: "DKR_draft_line",
+      id: "ДКР_line",
       type: "line",
       source: "DKR_poly",
       "source-layer": "DKR-draft-8xh91k",
@@ -221,21 +257,53 @@ map.on("load", function() {
     "admin-2-boundary"
   );
 
+  map.addSource("⚙ ППТ_source", {
+    type: "vector",
+    url: "mapbox://yanpogutsa.67zh48hu"
+  });
+  map.addSource("ППТ_source", {
+    type: "vector",
+    url: "mapbox://yanpogutsa.56ogmwov"
+  });
+
   map.addLayer(
     {
       id: "⚙ ППТ",
       type: "fill",
-      source: {
-        type: "vector",
-        url: "mapbox://yanpogutsa.67zh48hu"
-      },
+      source: "⚙ ППТ_source",
       "source-layer": "PPT-WIP-1movuq",
       layout: {
         visibility: "none"
       },
       paint: {
-        "fill-color": "hsla(224, 32%, 51%, 0.2)",
-        "fill-outline-color": "hsla(224, 32%, 51%, 0.5)"
+        //"fill-color": "hsla(224, 32%, 51%, 0.2)",
+        //"fill-outline-color": "hsla(224, 32%, 51%, 0.5)"
+        "fill-pattern": [
+          "match",
+          ["get", "STATUS"],
+          ["Планируемые, в работе"],
+          "pattern-blue",
+          "pattern-blue-solid"
+        ],
+        "fill-opacity": 0.2,
+      }
+    },
+    "admin-2-boundary"
+  ); // Place polygon under these labels.
+  map.addLayer(
+    {
+      id: "⚙ ППТ_line",
+      type: "line",
+      source: "⚙ ППТ_source",
+      "source-layer": "PPT-WIP-1movuq",
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        "line-color": "hsla(224, 32%, 51%, 0.2)",
+        //"fill-outline-color": "hsla(224, 32%, 51%, 0.5)"
+        "line-opacity": 0.9,
+        "line-width":1,
       }
     },
     "admin-2-boundary"
@@ -244,10 +312,7 @@ map.on("load", function() {
     {
       id: "ППТ",
       type: "fill",
-      source: {
-        type: "vector",
-        url: "mapbox://yanpogutsa.56ogmwov"
-      },
+      source: "ППТ_source",
       "source-layer": "PPT-122uv6",
       layout: {
         visibility: "none"
@@ -685,7 +750,8 @@ popup.on("close", function(e) {
   //map.setPaintProperty("ППТ", "fill-color", "hsla(0, 100%, 33%, 0.2)");
   //map.setFilter("⚙ ППТ", undefined); //["in", "REG_NUM", ""]);
   //map.setFilter("ППТ", undefined); //["in", "REG_NUM", ""]);
-  map.getSource("isoSource").setData(dataNull);
+  map.getSource("isoSource").setData(dataNull);3
+  map.removeLayer("temp-PPT");
 });
 ///////////////////////////
 map.on("click", "⚙ ППТ", function(e) {
@@ -706,9 +772,20 @@ map.on("click", "⚙ ППТ", function(e) {
         "</p>"
     )
     .addTo(map);
-  //var feature = e.features[0];
-  //map.setFilter("⚙ ППТ", ["in", "REG_NUM", feature.properties.REG_NUM]);
-  //map.setPaintProperty("⚙ ППТ", "fill-color", "hsla(224, 32%, 51%, 0.7)");
+    var featureId = e.features[0].properties.OBJECTID;
+    map.addLayer(
+    {
+      id: "temp-PPT",
+      type: "fill",
+      source: "⚙ ППТ_source",
+      "source-layer": "PPT-WIP-1movuq",
+      filter: ["in", "OBJECTID",featureId],
+      paint: {
+        "fill-color": "hsla(224, 32%, 51%, 0.6)",
+        //"fill-outline-color": "hsla(224, 32%, 51%, 0.5)
+      }
+    }
+  );
 });
 // Change the cursor to a pointer when the mouse is over the places layer.
 map.on("mouseenter", "⚙ ППТ", function() {
@@ -736,6 +813,20 @@ map.on("click", "ППТ", function(e) {
         "</p>"
     )
     .addTo(map);
+    var featureId = e.features[0].properties.OBJECTID;
+    map.addLayer(
+    {
+      id: "temp-PPT",
+      type: "fill",
+      source: "ППТ_source",
+      "source-layer": "PPT-122uv6",
+      filter: ["in", "OBJECTID",featureId],
+      paint: {
+        "fill-color": "hsla(0, 100%, 33%, 0.6)",
+        //"fill-outline-color": "hsla(224, 32%, 51%, 0.5)
+      }
+    }
+  );
   //var feature = e.features[0];
   //map.setFilter("ППТ", ["in", "REG_NUM", feature.properties.REG_NUM]);
   //map.setPaintProperty("ППТ", "fill-color", "hsla(0, 100%, 33%, 0.7)");
