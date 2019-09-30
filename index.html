@@ -32,11 +32,11 @@ body { margin:0; padding:0; }
     <h>ППТ в разработке</h>
     <span class="tabClose">&times</span>
   </div>
-  <button onclick="tabFilter(event,'PPT-WIP-TPU')">ТПУ</button>
-  <button onclick="tabFilter(event,'PPT-WIP-UDS')">УДС</button>
-  <button onclick="tabFilter(event,'PPT-WIP-metro')">Метро</button>
-  <button onclick="tabFilter(event,'PPT-WIP-terr')">Территории</button>
-  <button onclick="tabFilter(event,'PPT-renovation')">Реновация</button>
+  <button onclick="tabFilterLine(event,'PPT-WIP-TPU')">ТПУ</button>
+  <button onclick="tabFilterLine(event,'PPT-WIP-UDS')">УДС</button>
+  <button onclick="tabFilterLine(event,'PPT-WIP-metro')">Метро</button>
+  <button onclick="tabFilterLine(event,'PPT-WIP-terr')">Территории</button>
+  <button onclick="tabFilterLine(event,'PPT-renovation')">Реновация</button>
 </div>
 
 <div id="ППТ" class="tabcontent">
@@ -63,12 +63,12 @@ body { margin:0; padding:0; }
   <button onclick="tabFilterYear(event)">2022</button>
   <button onclick="tabFilterYear(event)">2023</button>
 </div>
-  <buttoni class="tablinks" onclick="toggleTab(event, '⚙ ППТ')"><i class="fa fa-wrench" aria-hidden="true"></i> ППТ</buttoni>
+  <buttoni class="tablinks" onclick="toggleLayerLine(event, '⚙ ППТ')"><i class="fa fa-wrench" aria-hidden="true"></i> ППТ</buttoni>
   <button class="tablinks" onclick="toggleTab(event, 'ППТ')">ППТ</button>
-  <button class="tablinks" onclick="toggleDKR(event, 'ДКР')">ДКР</button>
+  <button class="tablinks" onclick="toggleLayerLine(event, 'ДКР')">ДКР</button>
   <button class="tablinks" onclick="toggleLayer(event, '🗺')"><i class="fa fa-map" aria-hidden="true"></i></button>
 </div>
- 
+
 <script src="index.js" async></script>
  
 </body>
