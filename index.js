@@ -761,6 +761,9 @@ map.on("click", "⚙ ППТ", function(e) {
       "<h3>" +
         e.features[0].properties.NAME +
         "</h3>" +
+        "<p>Статус: " +
+        e.features[0].properties.STATUS +
+        "</p>"+
         "<p>Вид ППТ: " +
         e.features[0].properties.VID_PPT +
         "</p>" +
@@ -802,6 +805,9 @@ map.on("click", "ППТ", function(e) {
       "<h3>" +
         e.features[0].properties.NAME +
         "</h3>" +
+        "<p>Статус: " +
+        e.features[0].properties.STATUS +
+        "</p>"+
         "<p>Вид ППТ: " +
         e.features[0].properties.VID_PPT +
         "</p>" +
