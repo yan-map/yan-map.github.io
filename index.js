@@ -514,7 +514,7 @@ map.on("load", function() {
 
 map.on("click", "metro-stations-close", function(e) {
   let data =
-    "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-4729-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
+    "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-1019-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
     e.lngLat.lng +
     "&y=" +
     e.lngLat.lat +
@@ -599,7 +599,7 @@ map.on("click", "places-5y0blc", function(e) {
 
   /////////////////ISO
   let data =
-    "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-4729-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
+    "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-1019-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
     e.lngLat.lng +
     "&y=" +
     e.lngLat.lat +
