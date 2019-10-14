@@ -549,7 +549,7 @@ map.on("mouseleave", "metro-stations-close", function() {
 
 map.on("click", "MCD_stations", function(e) {
   let data =
-    "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-4729-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
+    "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-1019-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
     e.lngLat.lng +
     "&y=" +
     e.lngLat.lat +
