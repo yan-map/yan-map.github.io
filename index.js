@@ -18,6 +18,7 @@ var modal = document.getElementById("myModal");
           modal.style.display = "none";
           document.getElementById("map").style.height = "100%";
           map.getSource("panoPtSource").setData(ptDataNull);
+          changeThemeColor(themeColor);
         }
       };
       mapboxgl.accessToken =
@@ -36,6 +37,7 @@ var modal = document.getElementById("myModal");
           [38.3135420226066969, 56.1505434064830737] // Northeast coordinates
         ]
       });
+      const themeColor = "#ff5575";
       const c0 = "#006ff7";
       const c1 = "#484848";
       const c2 = "#ffc33c";
@@ -123,11 +125,17 @@ var modal = document.getElementById("myModal");
               zoom: 15.5,
               center: [e.lngLat.lng, e.lngLat.lat]
             });
+            changeThemeColor("#000");
           });
         } else {
           map.setLayoutProperty("SVCoverage", "visibility", "none");
           e.currentTarget.className = "";
         }
+      }
+
+      function changeThemeColor(color) {
+        var metaThemeColor = document.querySelector("meta[name=theme-color]");
+        metaThemeColor.setAttribute("content", color);
       }
 
       function toggleTab(e, tabName) {
@@ -621,6 +629,7 @@ var modal = document.getElementById("myModal");
           },
           minzoom: 13
         });
+        changeThemeColor(themeColor);
       });
 
       map.on("click", "metro-stations-close", function(e) {
