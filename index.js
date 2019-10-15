@@ -30,7 +30,6 @@ var modal = document.getElementById("myModal");
         minZoom: 2,
         zoom: 10,
         bearingSnap: 30,
-        doubleClickZoom: false,
         antialias: true,
         maxBounds: [
           [36.540169324143605, 55.020305819627616], // Southwest coordinates
@@ -87,9 +86,14 @@ var modal = document.getElementById("myModal");
 
       function togglePano(e) {
         var visibility = map.getLayoutProperty("SVCoverage", "visibility");
+        var currentZoom = map.getZoom();
         if (visibility === "none") {
           map.setLayoutProperty("SVCoverage", "visibility", "visible");
           e.currentTarget.className = " active";
+          if (currentZoom < 13) {
+            map.zoomTo(13);
+          }
+
           ///////////////////////////
           map.on("click", "SVCoverage", function(e) {
             var panoPtData = {
@@ -1042,16 +1046,6 @@ var modal = document.getElementById("myModal");
       });
 
       document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
-
-      map.on("dblclick", function windowOpen(e) {
-        var url1 =
-          "https://www.google.com/maps/@?api=1&map_action=pano&pano=tu510ie_z4ptBZYo2BGEJg&viewpoint=" +
-          e.lngLat.lat +
-          "," +
-          e.lngLat.lng +
-          "&heading=0&pitch=10&fov=250";
-        Window = window.open(url1, "_blank");
-      });
 
       map.on("mousemove", function(e) {
         if (map.getPitch() > 0) {
