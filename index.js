@@ -629,7 +629,6 @@ var modal = document.getElementById("myModal");
           },
           minzoom: 13
         });
-        changeThemeColor(themeColor);
       });
 
       map.on("click", "metro-stations-close", function(e) {
