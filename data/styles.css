@@ -1,4 +1,32 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
+
+/*Mapbox Logo*/
+.mapboxgl-ctrl-logo {
+  position: absolute;
+  bottom: 28px;
+  left: 8px;
+}
+
+/*attribution*/
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl {
+  margin: 0;
+}
+
+.mapboxgl-ctrl-attrib a {
+  color: #777;
+}
+.mapboxgl-ctrl-attrib.mapboxgl-compact {
+  margin-left: 5px;
+  font-size: 10px;
+  line-height: 12px;
+  max-height: 20px;
+}
+
+.mapboxgl-ctrl-attrib.mapboxgl-compact::after {
+  width: 20px;
+  height: 20px;
+}
+
 .mapboxgl-popup-content {
   font-family: "Roboto Mono", monospace;
   font-size: 10px;
@@ -31,7 +59,7 @@ p {
   opacity: 0.9;
   position: absolute;
   right: 15px;
-  bottom: 15px;
+  bottom: 20px;
   overflow: hidden;
   border-radius: 15px;
   background-color: #ff5575;
@@ -218,15 +246,14 @@ p {
   display: inline-block;
   width: 40%;
 }
-.header toggle {
-  display: inline-block;
+.header button {
   cursor: pointer;
   float: right;
   font-size: 18px;
   line-height: 24px;
   padding: 8px 0px;
   text-align: center;
-  border: none;
+  border: 1px solid #ddd;
   width: 40px;
   border-radius: 20px;
   outline: none;
@@ -235,10 +262,31 @@ p {
   color: #757575;
   -webkit-tap-highlight-color: transparent;
 }
-.header toggle:hover {
+.header button:hover {
   background-color: #bbb;
+  transition: 0.3s;
 }
-.header toggle.active {
+.header button.active {
   background-color: rgb(66, 66, 66);
   color: hsl(195, 59%, 52%);
 }
+
+.toggle {
+  display:none;
+  position: absolute;
+  cursor: pointer;
+  right: 15px;
+  top: 64px;
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  -webkit-tap-highlight-color: transparent;
+}
+.toggle:hover {
+  background-color: #bbb;
+  transition: 0.3s;
