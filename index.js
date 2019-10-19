@@ -122,7 +122,6 @@ var modal = document.getElementById("myModal");
             iFrame.src = urlSV;
             modal.style.display = "block";
             map.easeTo({
-              zoom: 15.5,
               center: [e.lngLat.lng, e.lngLat.lat]
             });
             changeThemeColor("#000");
