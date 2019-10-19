@@ -133,6 +133,21 @@ var modal = document.getElementById("myModal");
         }
       }
 
+function resetNorth() {
+        map.easeTo({ bearing: 0, pitch: 0 });
+      }
+      map.on("rotate", function() {
+        var northButton = document.getElementById("north");
+        var rotation = -map.getBearing();
+        var rotationTransform = "rotate(" + rotation + "deg)";
+        northButton.style.transform = rotationTransform;
+        if (rotation === 0) {
+          northButton.style.display = "none";
+        } else {
+          northButton.style.display = "block";
+        }
+      });
+
       function changeThemeColor(color) {
         var metaThemeColor = document.querySelector("meta[name=theme-color]");
         metaThemeColor.setAttribute("content", color);
@@ -1055,7 +1070,7 @@ var modal = document.getElementById("myModal");
 
       document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
-      map.on("mousemove", function(e) {
+      map.on("pitch", function(e) {
         if (map.getPitch() > 0) {
           map.setLayoutProperty("3d-buildings", "visibility", "visible");
           map.setLayoutProperty("buildings-13ut9s", "visibility", "none");
