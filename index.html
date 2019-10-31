@@ -15,12 +15,12 @@
       rel="stylesheet"
     />
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="./data/styles.css" type="text/css" />
     <link
       rel="stylesheet"
       href="./data/mapbox-gl-geocoder.css"
       type="text/css"
     />
-    <link rel="stylesheet" href="./data/styles.css" type="text/css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -43,9 +43,11 @@
     <div id="map"></div>
     <div class="header">
       <div id="geocoder" class="geocoder"></div>
-      <button class="button" onclick="togglePano(event)">
-        <i class="fa fa-street-view"></i>
-      </button>
+      <div class="head-toolbar">
+        <button class="button" onclick="togglePano(event)">
+          <i class="fa fa-street-view"></i>
+        </button>
+      </div>
     </div>
     <button class="toggle" id="north" onclick="resetNorth()">
       <!--<span class="north-content"></span>-->
@@ -54,7 +56,6 @@
         src="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E %3Cpolygon fill='%23333333' points='6,9 10,1 14,9'/%3E %3Cpolygon fill='%23CCCCCC' points='6,11 10,19 14,11 '/%3E %3C/svg%3E"
       />
     </button>
-
     <!-- Tabs -->
     <div class="tab">
       <div
@@ -129,7 +130,7 @@
         ></iframe>
       </div>
     </div>
-
+    
 <script src="index.js" async></script>
  
 </body>
