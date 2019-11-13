@@ -38,6 +38,29 @@
   padding: 5px 5px 5px;
   pointer-events: auto;
 }
+
+.mapboxgl-popup-content .route {
+  background-color: white;
+  padding:4px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  margin: 1px;
+  transition: 0.1s;
+  cursor: pointer;
+  outline:none !important;
+}
+
+.mapboxgl-popup-content .route-active {
+  border: 1px solid white;
+  color: white;
+  border-radius: 5px;
+  margin: 1px; 
+  padding:4px;
+  transition: 0.3s;
+  cursor: pointer;
+  outline:none !important;
+}
+
 h3 {
   margin-top: 1;
   margin-bottom: 0;
