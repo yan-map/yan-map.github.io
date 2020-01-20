@@ -38,6 +38,29 @@
   padding: 5px 5px 5px;
   pointer-events: auto;
 }
+
+.mapboxgl-popup-content .route {
+  background-color: white;
+  padding:4px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  margin: 1px;
+  transition: 0.1s;
+  cursor: pointer;
+  outline:none !important;
+}
+
+.mapboxgl-popup-content .route-active {
+  border: 1px solid white;
+  color: white;
+  border-radius: 5px;
+  margin: 1px; 
+  padding:4px;
+  transition: 0.3s;
+  cursor: pointer;
+  outline:none !important;
+}
+
 h3 {
   margin-top: 1;
   margin-bottom: 0;
@@ -83,8 +106,6 @@ p {
   color: white;
 }
 .tab buttoni {
-  box-sizing: border-box;
-  height: 38px;
   background-color: inherit;
   float: left;
   line-height: 14px;
@@ -94,6 +115,7 @@ p {
   padding: 12px;
   transition: 0.3s;
   font-size: 14px;
+  font-family: inherit;
   font-weight: bold;
   color: white;
 }
@@ -237,19 +259,20 @@ p {
   box-shadow: 0 5px 6px rgba(0, 0, 0, 0.15);
 }
 
+.header {
+  position: absolute;
+  right: 0px;
+  left: 0px;
+  padding: 15px;
+}
 .geocoder {
-  margin:15px;
   display: inline-block;
   width: 40%;
 }
-.head-toolbar{
-  position: absolute;
-  display: inline;
-  right: 0;
-  margin: 15px;
+.head-toolbar {
+  display:inline;
 }
-
-.head-toolbar button {
+.header .head-toolbar button {
   cursor: pointer;
   float: right;
   font-size: 18px;
@@ -258,18 +281,18 @@ p {
   text-align: center;
   border: 1px solid #ddd;
   width: 42px;
-  border-radius: 50%;
+  border-radius: 24px;
   outline: none;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   color: #757575;
   -webkit-tap-highlight-color: transparent;
 }
-.head-toolbar button:hover {
+.header .head-toolbar button:hover {
   background-color: #bbb;
   transition: 0.3s;
 }
-.head-toolbar button.active {
+.header .head-toolbar button.active {
   background-color: rgb(66, 66, 66);
   color: hsl(195, 59%, 52%);
 }
@@ -284,7 +307,7 @@ p {
   height: 42px;
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 50%;
+  border-radius: 24px;
   outline: none;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
   background-color: #fff;
