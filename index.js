@@ -1,3 +1,4 @@
+//import stops from "stops.json";
 var modal = document.getElementById("myModal");
 var iFrame = document.getElementById("iFrame");
 var ptDataNull = {
@@ -37,6 +38,7 @@ var map = new mapboxgl.Map({
     [38.3135420226066969, 56.1505434064830737] // Northeast coordinates
   ]
 });
+map.addControl(new mapboxgl.AttributionControl(), "bottom-left");
 const themeColor = "#ff5575";
 const c0 = "#006ff7";
 const c1 = "#484848";
@@ -91,7 +93,8 @@ function togglePano(e) {
   var currentZoom = map.getZoom();
   if (visibility === "none") {
     map.setLayoutProperty("SVCoverage", "visibility", "visible");
-    e.currentTarget.className = " active";
+    e.currentTarget.className += " active";
+    e.currentTarget.style.color = "hsl(195, 59%, 52%)";
     if (currentZoom < 13) {
       map.zoomTo(13);
     }
@@ -114,11 +117,13 @@ function togglePano(e) {
       map.getSource("panoPtSource").setData(panoPtData);
 
       var urlSV =
-        "https://www.google.com/maps/embed?pb=!4v1570823233722!6m8!1m7!1stu510ie_z4ptBZYo2BGEJg!2m2!1d" +
+        "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAiBlN_z2kIvx1ZX-3yAclOVxUVCNOkiLs&location=" +
         e.lngLat.lat +
-        "!2d" +
+        "," +
         e.lngLat.lng +
-        "!3f0!4f10!5f0.4000000000000002";
+        "&heading=360&pitch=10&fov=65";
+
+      ////
       iFrame.src = urlSV;
       modal.style.display = "block";
       map.easeTo({
@@ -128,7 +133,8 @@ function togglePano(e) {
     });
   } else {
     map.setLayoutProperty("SVCoverage", "visibility", "none");
-    e.currentTarget.className = "";
+    e.currentTarget.className = "headerButton";
+    e.currentTarget.style.color = "#757575";
   }
 }
 
@@ -348,7 +354,6 @@ map.on("load", function() {
           "hsl(324, 16%, 34%)",
           "#3cbe66"
         ],
-        "fill-outline-color": "#3cbe66",
         "fill-opacity": 0.4
       }
     },
@@ -474,7 +479,8 @@ map.on("load", function() {
       paint: {
         "fill-pattern": "pattern",
         "fill-opacity": 0.4
-      }
+      },
+      layout: { visibility: "none" }
     },
     "buildings-13ut9s"
   );
@@ -632,16 +638,25 @@ map.on("load", function() {
     },
     minzoom: 13
   });
+
+  map.addSource("isoPtSource", {
+    type: "geojson",
+    data: ptDataNull
+  });
+  map.addLayer({
+    id: "isoPt",
+    type: "circle",
+    source: "isoPtSource",
+    paint: {
+      "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 3, 15, 10],
+      "circle-color": "rgba(255, 85, 117, 0.7)",
+      "circle-stroke-color": "#fff",
+      "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 13, 1, 16, 3]
+    }
+  });
 });
 
 map.on("click", "metro-stations-close", function(e) {
-  let data =
-    "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-1019-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
-    e.lngLat.lng +
-    "&y=" +
-    e.lngLat.lat +
-    "&maxdist=400&geometry=1";
-  map.getSource("isoSource").setData(data);
   popup
     .setLngLat(e.lngLat)
     .setHTML(
@@ -669,15 +684,116 @@ map.on("mouseleave", "metro-stations-close", function() {
   map.getCanvas().style.cursor = "";
 });
 
+function toggleIso(i) {
+  var visibility = map.getLayoutProperty("iso", "visibility");
+  if (visibility === "none") {
+    map.setLayoutProperty("iso", "visibility", "visible");
+    i.currentTarget.className += " active";
+    i.currentTarget.style.color = "#ef4c89";
+    function isoTrack(e) {
+      let data =
+        "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-1019-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
+        e.lngLat.lng +
+        "&y=" +
+        e.lngLat.lat +
+        "&maxdist=400&geometry=1";
+      map.getSource("isoSource").setData(data);
+    }
+
+    map.once("click", function(e) {
+      isoTrack(e);
+      let coords = e.lngLat;
+      let geojson = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [coords.lng, coords.lat]
+            }
+          }
+        ]
+      };
+      map.getSource("isoPtSource").setData(geojson);
+      /*if (map.isSourceLoaded("isoSource")) {
+        console.log("done");
+      }*/
+    });
+    //////
+    map.on("mouseenter", "isoPt", function() {
+      //map.setPaintProperty("isoPt", "circle-color", "#3bb2d0");
+      map.getCanvas().style.cursor = "pointer";
+    });
+
+    map.on("mouseleave", "isoPt", function() {
+      map.setPaintProperty("isoPt", "circle-color", "rgba(255, 85, 117, 0.7)");
+      map.getCanvas().style.cursor = "";
+    });
+    function onMove(e) {
+      var coords = e.lngLat;
+      var geojson = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [0, 0]
+            }
+          }
+        ]
+      };
+
+      // Set a UI indicator for dragging.
+      map.getCanvas().style.cursor = "grabbing";
+
+      // Update the Point feature in `geojson` coordinates
+      // and call setData to the source layer `point` on it.
+      geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
+      map.getSource("isoPtSource").setData(geojson);
+    }
+
+    function onUp(e) {
+      isoTrack(e);
+      map.getCanvas().style.cursor = "";
+
+      // Unbind mouse/touch events
+      map.off("mousemove", onMove);
+      map.off("touchmove", onMove);
+    }
+
+    map.on("mousedown", "isoPt", function(e) {
+      map.setPaintProperty("isoPt", "circle-color", "#be2e4b");
+
+      // Prevent the default map drag behavior.
+      e.preventDefault();
+
+      map.getCanvas().style.cursor = "grab";
+
+      map.on("mousemove", onMove);
+      map.once("mouseup", onUp);
+    });
+
+    map.on("touchstart", "isoPt", function(e) {
+      if (e.points.length !== 1) return;
+
+      // Prevent the default map drag behavior.
+      e.preventDefault();
+
+      map.on("touchmove", onMove);
+      map.once("touchend", onUp);
+    });
+  } else {
+    map.setLayoutProperty("iso", "visibility", "none");
+    map.getSource("isoSource").setData(dataNull);
+    map.getSource("isoPtSource").setData(ptDataNull);
+    i.currentTarget.className = "headerButton";
+    i.currentTarget.style.color = "#757575";
+  }
+}
+
 map.on("click", "MCD_stations", function(e) {
-  let data =
-    "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-1019-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
-    e.lngLat.lng +
-    "&y=" +
-    e.lngLat.lat +
-    "&maxdist=400&geometry=1";
-  console.log(data);
-  map.getSource("isoSource").setData(data);
   popup
     .setLngLat(e.lngLat)
     .setHTML(
@@ -708,28 +824,13 @@ map.on("mouseleave", "MCD_stations", function() {
 var popup = new mapboxgl.Popup();
 
 map.on("click", "places-5y0blc", function(e) {
-  /////////////////ISO
-  let data =
-    "https://gis01.rumap.ru/4898/serviceAreaStatistics?guid=DDC7AEA3-1BDA-1019-A30D-1CD15F74BEED&type=pedestrianZone&x=" +
-    e.lngLat.lng +
-    "&y=" +
-    e.lngLat.lat +
-    "&maxdist=400&geometry=1";
-  map.getSource("isoSource").setData(data);
-
   /////////////////////////ROUTES
   let features = map.queryRenderedFeatures(e.point, {
     layers: ["places-5y0blc"]
   });
-  let routes = features.reduce(function(memo, feature) {
-    memo.push(feature.properties.route);
-    return memo;
-  }, []);
 
-  let routeFix = routes
-    .join("'")
-    .replace(/, /g, "'")
-    .split("'");
+  let routes = features[0].properties.route;
+  let routeFix = routes.split(", ");
 
   let filter = routeFix.slice();
   filter.unshift("in", "route");
@@ -738,8 +839,8 @@ map.on("click", "places-5y0blc", function(e) {
   map.setPaintProperty("metro-lines-constructing", "line-color", "#888");
   map.setPaintProperty("MCC", "line-color", "#888");
   map.setPaintProperty("MCD-lines", "line-color", "#888");
-  map.setLayoutProperty("ngpt-pass", "visibility", "visible");
-  map.setLayoutProperty("ngpt-pass-text", "visibility", "visible");
+  //map.setLayoutProperty("ngpt-pass", "visibility", "visible");
+  //map.setLayoutProperty("ngpt-pass-text", "visibility", "visible");
 
   window.routesList = routeFix;
   for (var i = 0; i < window.routesList.length; i++) {
@@ -832,24 +933,59 @@ map.on("click", "places-5y0blc", function(e) {
     .addTo(map);
 
   var routesHTML = document.getElementsByClassName("route");
+
   for (var i = 0; i < routesHTML.length; i++) {
     routesHTML[i].addEventListener("click", function() {
+      var routesHTMLactive = document.getElementsByClassName("route-active");
+
+      function terminator(i) {
+        routesHTMLactive[i].style.backgroundColor = "white";
+        var routeIdBefore = routesHTMLactive[i].textContent;
+        map.setPaintProperty(routeIdBefore, "line-width", 1.5);
+        map.setFilter("ngpt-pass", null);
+        map.setFilter("ngpt-pass-text", null);
+        map.setLayoutProperty("ngpt-pass", "visibility", "none");
+        map.setLayoutProperty("ngpt-pass-text", "visibility", "none");
+        routesHTMLactive[i].className = "route";
+      }
+
+      for (var i = 0; i < routesHTMLactive.length; i++) terminator(i);
+
       var routeId = this.textContent;
 
       var routeColor = map.getPaintProperty(routeId, "line-color");
 
       var lineWidth = map.getPaintProperty(routeId, "line-width");
       if (lineWidth === 1.5) {
+        /////////////////
         map.setPaintProperty(routeId, "line-width", 6);
         //map.setPaintProperty(routeId, "line-dasharray", null);
         this.className = "route-active";
         this.style.backgroundColor = routeColor;
         this.style.borderColor = routeColor;
-      } else {
-        map.setPaintProperty(routeId, "line-width", 1.5);
-        //map.setPaintProperty(routeId, "line-dasharray", [2, 1]);
-        this.className = "route";
-        this.style.backgroundColor = "white";
+
+        /*let renderedStops = map.querySourceFeatures("stops",{sourceLayer:"NGPT-stops-spt-beta-81ib3b"
+        });*/
+        let renderedStops = stops;
+
+        let routeStops = ["in", "fid"];
+
+        for (var e = 0; e < renderedStops.length; e++) {
+          let currentStop = renderedStops[e].route;
+
+          let regexp = new RegExp(routeId + ",");
+          let result = regexp.test(currentStop);
+
+          if (result === true) {
+            routeStops.push(renderedStops[e].fid);
+          }
+        }
+        map.setFilter("ngpt-pass", routeStops);
+        map.setFilter("ngpt-pass-text", routeStops);
+        map.setPaintProperty("ngpt-pass", "circle-color", routeColor);
+        map.setLayoutProperty("ngpt-pass", "visibility", "visible");
+        map.setPaintProperty("ngpt-pass", "circle-color", routeColor);
+        map.setLayoutProperty("ngpt-pass-text", "visibility", "visible");
       }
     });
   }
@@ -901,7 +1037,6 @@ popup.on("close", function(e) {
   //map.setPaintProperty("ППТ", "fill-color", "hsla(0, 100%, 33%, 0.2)");
   //map.setFilter("⚙ ППТ", undefined); //["in", "REG_NUM", ""]);
   //map.setFilter("ППТ", undefined); //["in", "REG_NUM", ""]);
-  map.getSource("isoSource").setData(dataNull);
   map.removeLayer("temp-PPT");
 });
 ///////////////////////////
@@ -1083,7 +1218,19 @@ var geocoder = new MapboxGeocoder({
   ]
 });
 
-document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+let p = document.createElement("button");
+p.innerHTML = `<i class="fa fa-street-view"></i>`;
+p.setAttribute("class", "headerButton");
+p.setAttribute("onclick", "togglePano(event)");
+
+let b = document.createElement("button");
+b.innerHTML = `<i class="fa fa-dot-circle-o"></i>`;
+b.setAttribute("class", "headerButton");
+b.setAttribute("onclick", "togglePano(event)");
+
+let geocoderDOM = document.getElementById("geocoder");
+let headerDOM = document.getElementById("header");
+geocoderDOM.insertBefore(geocoder.onAdd(map), headerDOM);
 
 map.on("pitch", function(e) {
   if (map.getPitch() > 0) {
