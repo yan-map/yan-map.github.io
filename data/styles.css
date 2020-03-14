@@ -310,7 +310,7 @@ p {
   -webkit-tap-highlight-color: transparent;
 }
 
-@media (max-width: 485px){
+@media (max-width: 520px){
   .toggle {top: 64px;}
 }
 
