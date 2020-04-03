@@ -568,6 +568,7 @@ map.on("load", function() {
       },
       paint: {
         "circle-color": "hsla(213, 100%, 48%, 0.2)",
+        "circle-opacity": 0.2,
         "circle-radius": [
           "interpolate",
           ["cubic-bezier", 0.3, 1, 1, 1],
