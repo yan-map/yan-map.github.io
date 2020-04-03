@@ -1,4 +1,3 @@
-//import stops from "stops.json";
 var modal = document.getElementById("myModal");
 var iFrame = document.getElementById("iFrame");
 var ptDataNull = {
@@ -967,22 +966,21 @@ map.on("click", "places-5y0blc", function(e) {
         this.style.backgroundColor = routeColor;
         this.style.borderColor = routeColor;
 
-        /*let renderedStops = map.querySourceFeatures("stops",{sourceLayer:"NGPT-stops-spt-beta-81ib3b"
-        });*/
-        let renderedStops = stops;
-
-        let routeStops = ["in", "fid"];
-
-        for (var e = 0; e < renderedStops.length; e++) {
-          let currentStop = renderedStops[e].route;
-
-          let regexp = new RegExp(routeId + ",");
-          let result = regexp.test(currentStop);
-
-          if (result === true) {
-            routeStops.push(renderedStops[e].fid);
-          }
-        }
+        let currentRouteGeometry = map.queryRenderedFeatures({
+          layers: [routeId]
+        });
+        let currentRouteFilter = currentRouteGeometry[0].properties.stopsFids;
+        let routeStops = [
+          "all",
+          [
+            "match",
+            ["get", "fid"],
+            JSON.parse("[" + currentRouteFilter + "]"),
+            true,
+            false
+          ]
+        ];
+        
         map.setFilter("ngpt-pass", routeStops);
         map.setFilter("ngpt-pass-text", routeStops);
         map.setPaintProperty("ngpt-pass", "circle-color", routeColor);
