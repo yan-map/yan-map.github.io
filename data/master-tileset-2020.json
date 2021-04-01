@@ -313,6 +313,20 @@
       {
         "boundingVolume": {
           "sphere": [
+            2863205.27371648,
+            2186633.35556942,
+            5246162.76934151,
+            4212.97257036343
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/224-43/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
             2860635.47222341,
             2184552.37130793,
             5248415.94703451,
@@ -355,6 +369,62 @@
       {
         "boundingVolume": {
           "sphere": [
+            2852919.48431551,
+            2178304.08736817,
+            5255163.02827575,
+            4213.36359479232
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/224-47/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2850345.297265,
+            2176219.55175238,
+            5257407.90183437,
+            4213.45956575059
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/224-48/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2847770.01637242,
+            2174134.13036076,
+            5259650.69717957,
+            4213.5548229571
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/224-49/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2845193.6426575,
+            2172047.82401907,
+            5261891.41344105,
+            4213.64936656893
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/224-50/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
             2888910.3035104,
             2212597.10330861,
             5221292.87885252,
@@ -378,6 +448,20 @@
         "geometricError": 16,
         "content": {
           "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/225-33/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2860714.96157813,
+            2189764.96519016,
+            5246214.75932825,
+            4212.74501253217
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/225-43/tileset.json"
         }
       },
       {
@@ -420,6 +504,62 @@
         "geometricError": 16,
         "content": {
           "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/225-46/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2850429.07048238,
+            2181435.61466456,
+            5255215.10664,
+            4213.13608074148
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/225-47/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2847854.85798185,
+            2179351.05844635,
+            5257460.00224137,
+            4213.23206349267
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/225-48/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2845279.55162873,
+            2177265.61644379,
+            5259702.81960865,
+            4213.32733283012
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/225-49/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2842703.15244277,
+            2175179.28948266,
+            5261943.55787154,
+            4213.42188891137
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/225-50/tileset.json"
         }
       },
       {
@@ -607,6 +747,20 @@
       {
         "boundingVolume": {
           "sphere": [
+            2842787.94824615,
+            2180396.27991791,
+            5259752.86830408,
+            4213.09773058155
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/226-49/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
             2873689.19991404,
             2210568.03997693,
             5230481.82343322,
@@ -761,6 +915,62 @@
       {
         "boundingVolume": {
           "sphere": [
+            2845444.82274419,
+            2187696.19403332,
+            5255313.04732924,
+            4212.67471658948
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/227-47/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2842870.56238174,
+            2185611.59906876,
+            5257557.98438513,
+            4212.77072293537
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/227-48/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2840295.20814693,
+            2183526.11830385,
+            5259800.84316806,
+            4212.86601654603
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/227-49/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2837718.76105952,
+            2181439.75256436,
+            5262041.62280772,
+            4212.96059757946
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/227-50/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
             2868633.43288312,
             2211622.4713625,
             5232795.23083269,
@@ -901,6 +1111,48 @@
       {
         "boundingVolume": {
           "sphere": [
+            2842950.99268574,
+            2190825.24114845,
+            5255358.90946287,
+            4212.44086716122
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/228-47/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2840376.70991146,
+            2188740.62804007,
+            5257603.86593044,
+            4212.53688530909
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/228-48/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2837801.33325556,
+            2186655.12912384,
+            5259846.74410685,
+            4212.63219106171
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/228-49/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
             2861010.9588276,
             2210598.51171489,
             5237368.18492132,
@@ -1013,6 +1265,34 @@
       {
         "boundingVolume": {
           "sphere": [
+            2840456.02773592,
+            2193953.45658185,
+            5255402.69933499,
+            4212.20490661995
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/229-47/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2837881.72356262,
+            2191868.8261493,
+            5257647.67433715,
+            4212.3009365745
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/229-48/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
             2855949.48699549,
             2211648.49410837,
             5239671.34842109,
@@ -1111,6 +1391,20 @@
       {
         "boundingVolume": {
           "sphere": [
+            2835385.60526426,
+            2194996.19092177,
+            5257689.40951965,
+            4212.06287708093
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/230-48/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
             2850885.73537599,
             2212696.70963843,
             5241970.40900258,
@@ -1190,6 +1484,48 @@
         "geometricError": 16,
         "content": {
           "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/231-46/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2835462.7008805,
+            2200207.38250621,
+            5255484.06195651,
+            4211.72665360737
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/231-47/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2845819.7099246,
+            2213743.15908891,
+            5244265.36301575,
+            4210.99336407862
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/232-42/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "sphere": [
+            2865694.43922383,
+            2183500.9209071,
+            5246108.71099199,
+            4213.19801572706
+          ]
+        },
+        "geometricError": 16,
+        "content": {
+          "uri": "https://smart.mos.ru/geodata/3dtiles/2020/4000/233-43/tileset.json"
         }
       }
     ]
