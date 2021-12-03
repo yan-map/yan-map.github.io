@@ -685,7 +685,7 @@
 { "type": "Feature", "properties": { "NameOfStation": "Мичуринский пр-т", "railway": "", "line": "Калининская линия", "lineNumber": "i", "level": 1 }, "geometry": { "type": "Point", "coordinates": [ 37.4833, 55.6896 ] } },
 { "type": "Feature", "properties": { "NameOfStation": "Аминьевская", "railway": "", "line": "БКЛ", "lineNumber": "a", "level": 1 }, "geometry": { "type": "Point", "coordinates": [ 37.4647, 55.6974 ] } },
 { "type": "Feature", "properties": { "NameOfStation": "Аминьевская", "railway": "", "line": "D4", "lineNumber": "c", "level": 1 }, "geometry": { "type": "Point", "coordinates": [ 37.46755, 55.696 ] } },
-{ "type": "Feature", "properties": { "NameOfStation": "Народное Ополчение", "railway": ",construction", "line": "БКЛ", "lineNumber": "a", "level": 1 }, "geometry": { "type": "Point", "coordinates": [ 37.485534, 55.775729 ] } },
+{ "type": "Feature", "properties": { "NameOfStation": "Народное Ополчение", "railway": "", "line": "БКЛ", "lineNumber": "a", "level": 1 }, "geometry": { "type": "Point", "coordinates": [ 37.485534, 55.775729 ] } },
 { "type": "Feature", "properties": { "NameOfStation": "Пр-т Маршала Жукова (2025)", "railway": ",construction", "line": "Рублево-Архангельская", "lineNumber": "k", "level": 1 }, "geometry": { "type": "Point", "coordinates": [ 37.4881, 55.7769 ] } },
 { "type": "Feature", "properties": { "NameOfStation": "Рижская", "railway": "", "line": "Калужско-Рижская линия", "lineNumber": "y", "level": 1 }, "geometry": { "type": "Point", "coordinates": [ 37.6362, 55.7925 ] } },
 { "type": "Feature", "properties": { "NameOfStation": "Рижская (2022)", "railway": "", "line": "БКЛ", "lineNumber": "a", "level": 1 }, "geometry": { "type": "Point", "coordinates": [ 37.634398336578087, 55.793881454637074 ] } },
