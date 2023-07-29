@@ -60,27 +60,27 @@
 			{
 				"boundingVolume": {"sphere":[2848172.3667214401066303,2200202.0247363499365747,5248655.3131928797811270,4211.9125429009200161]},
 				"viewerRequestVolume": {"sphere":[2848172.3667214401066303,2200202.0247363499365747,5248655.3131928797811270,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-44_2905https://smart.mos.ru/geodata/3dtiles/2023/4000/229-44/229-44.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-44_29052023/4000/229-44/229-44.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2850742.2851433102041483,2202283.1036574398167431,5246402.0336762899532914,4211.8136631961797320]},
 				"viewerRequestVolume": {"sphere":[2850742.2851433102041483,2202283.1036574398167431,5246402.0336762899532914,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-43_2606https://smart.mos.ru/geodata/3dtiles/2023/4000/229-43/229-43.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-43_26062023/4000/229-43/229-43.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2853311.1045819800347090,2204363.2926394799724221,5244146.6802151501178741,4211.7140706709797087]},
 				"viewerRequestVolume": {"sphere":[2853311.1045819800347090,2204363.2926394799724221,5244146.6802151501178741,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-42_2905https://smart.mos.ru/geodata/3dtiles/2023/4000/229-42/229-42.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-42_29052023/4000/229-42/229-42.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2855878.8240201198495924,2206442.5908586601726711,5241889.2536847395822406,4211.6137651722601731]},
 				"viewerRequestVolume": {"sphere":[2855878.8240201198495924,2206442.5908586601726711,5241889.2536847395822406,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-41_2905https://smart.mos.ru/geodata/3dtiles/2023/4000/229-41/229-41.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-41_29052023/4000/229-41/229-41.json"}
 			},			
 			{
 				"boundingVolume": {"sphere":[2861010.9588275998830795,2210598.5117148901335895,5237368.1849213195964694,4211.4110146437196818]},
 				"viewerRequestVolume": {"sphere":[2861010.9588275998830795,2210598.5117148901335895,5237368.1849213195964694,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-39_1505https://smart.mos.ru/geodata/3dtiles/2023/4000/229-39/229-39.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-39_15052023/4000/229-39/229-39.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2840376.7099114600569010,2188740.6280400701798499,5257603.8659304399043322,4212.5368853090903940]},
@@ -95,12 +95,12 @@
 			{
 				"boundingVolume": {"sphere":[2850667.2675273101776838,2197073.7573734400793910,5248611.5790286995470524,4212.1485368146895780]},
 				"viewerRequestVolume": {"sphere":[2850667.2675273101776838,2197073.7573734400793910,5248611.5790286995470524,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_228-44_0606https://smart.mos.ru/geodata/3dtiles/2023/4000/228-44/228-44.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_228-44_06062023/4000/228-44/228-44.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2853237.1645856099203229,2199154.8189990599639714,5246358.3181161303073168,4212.0496675530703214]},
 				"viewerRequestVolume": {"sphere":[2853237.1645856099203229,2199154.8189990599639714,5246358.3181161303073168,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_228-43_1505https://smart.mos.ru/geodata/3dtiles/2023/4000/228-43/228-43.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_228-43_15052023/4000/228-43/228-43.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2855805.9626695797778666,2201234.9906928301788867,5244102.9832763597369194,4211.9500851310003782]},
@@ -145,7 +145,7 @@
 			{
 				"boundingVolume": {"sphere":[2850590.0577750299125910,2191862.7232598601840436,5250816.9418839300051332,4212.4805650814496403]},
 				"viewerRequestVolume": {"sphere":[2850590.0577750299125910,2191862.7232598601840436,5250816.9418839300051332,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_227-45_1505https://smart.mos.ru/geodata/3dtiles/2023/4000/227-45/227-45.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_227-45_15052023/4000/227-45/227-45.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2853009.640058474,2193827.025114557,5248283.859472698,4200.0]},
@@ -508,7 +508,7 @@
 			{
 				"boundingVolume": {"sphere":[2888700.7911017099395394,2196983.0841639097779989,5227952.9545814497396350,4212.6051353618704525]},				
 				"viewerRequestVolume": {"sphere":[2888700.7911017099395394,2196983.0841639097779989,5227952.9545814497396350,40000]},				
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_222-35_1907https://smart.mos.ru/geodata/3dtiles/2023/4000/222-35/222-35.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_222-35_19072023/4000/222-35/222-35.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2891260.6119499299675226,2199055.9862738698720932,5225681.1911038104444742,4212.4998864864101051]},				
@@ -1043,12 +1043,12 @@
 			{
 				"boundingVolume": {"sphere":[2848096.2725124200806022,2194991.8066401001997292,5250862.7651396198198199,4212]},
 				"viewerRequestVolume": {"sphere":[2848096.2725124200806022,2194991.8066401001997292,5250862.7651396198198199,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_228-45_0606https://smart.mos.ru/geodata/3dtiles/2023/4000/228-45/228-45.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_228-45_06062023/4000/228-45/228-45.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2845601.3503340901806951,2198120.0567003497853875,5250906.5178904701024294,4212]},
 				"viewerRequestVolume": {"sphere":[2845601.3503340901806951,2198120.0567003497853875,5250906.5178904701024294,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-45_2905https://smart.mos.ru/geodata/3dtiles/2023/4000/229-45/229-45.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-45_29052023/4000/229-45/229-45.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2843029.2369993999600410,2196037.2003739099018276,5253155.6468954402953386,4212]},
@@ -1098,7 +1098,7 @@
 			{
 				"boundingVolume": {"sphere":[2858445.4424408199265599,2208520.9974915198981762,5239629.7549611497670412,4211.5127465467803631]},
 				"viewerRequestVolume": {"sphere":[2858445.4424408199265599,2208520.9974915198981762,5239629.7549611497670412,40000]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-40_2905https://smart.mos.ru/geodata/3dtiles/2023/4000/229-40/229-40.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_229-40_29052023/4000/229-40/229-40.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2855949.4869954898022115,2211648.4941083700396121,5239671.3484210902824998,4211.2746021296097751]},
@@ -1153,7 +1153,7 @@
 			{
 				"boundingVolume": {"sphere":[2848590.2378524837,2246883.381294882,5228288.411554024,4200.0]},
 				"viewerRequestVolume": {"sphere":[2848590.2378524837,2246883.381294882,5228288.411554024,20000.0]},
-				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_238-35_1506https://smart.mos.ru/geodata/3dtiles/2023/4000/238-35/238-35.json"}
+				"content": {"uri": "https://smart.mos.ru/geodata/3dtiles/virt/virt_238-35_15062023/4000/238-35/238-35.json"}
 			},
 			{
 				"boundingVolume": {"sphere":[2856172.9934517704,2242725.6792979864,5225990.8595491145,4200.0]},
